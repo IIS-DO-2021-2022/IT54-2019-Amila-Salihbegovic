@@ -121,5 +121,21 @@ public class Circle extends Shape {
 		}
 		this.radius = radius;
 	}
+
+	@Override
+	public Circle clone(){
+		Circle circle = new Circle();
+		
+		circle.setcenter(this.getcenter());
+		try {
+			circle.setradius(this.getradius());
+		}catch(Exception e) {
+			throw new NumberFormatException("An error occured."+e);
+		}
+		circle.setSelected(this.isSelected());
+		circle.setColor(this.getColor());
+		circle.setInnerColor(this.getInnerColor());
+		return circle;
+	}
 	
 }

@@ -1,7 +1,7 @@
 package geometry;
 import java.awt.Color;
 import java.awt.Graphics;
-public abstract class Shape implements Moveable, Comparable{
+public abstract class Shape implements Moveable, Comparable, Cloneable{
 	protected boolean selected;
 	private Color color;
 	private Color innerColor;
@@ -10,6 +10,7 @@ public abstract class Shape implements Moveable, Comparable{
 	public abstract void draw(Graphics g);
 	public abstract double area();
 	public abstract void fill(Graphics g);
+	protected abstract Shape clone();
 
 	public Color getInnerColor() {
 		return innerColor;

@@ -1,0 +1,28 @@
+package command;
+
+import geometry.Shape;
+import mvc.DrawingModel;
+
+public class AddShapeCommand implements Command {
+
+	private Shape shape;
+	private DrawingModel model;
+
+	public AddShapeCommand(Shape shape, DrawingModel model) {
+		super();
+		this.shape = shape;
+		this.model = model;
+	}
+
+	@Override
+	public void execute() {
+		model.getShapes().add(shape);
+
+	}
+
+	@Override
+	public void unexecute() {
+		model.remove(shape);
+	}
+
+}

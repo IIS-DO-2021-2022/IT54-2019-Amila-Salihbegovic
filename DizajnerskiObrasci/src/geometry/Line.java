@@ -108,4 +108,15 @@ public class Line extends Shape {
 		
 	}
 
+	@Override
+	public Line clone() {
+		Line line = new Line();
+		
+		line.setstartpoint(this.getstartpoint());
+		line.setendpoint(this.getendpoint());
+		line.setColor(this.getColor());
+		
+		return line;
+	}
+
 }

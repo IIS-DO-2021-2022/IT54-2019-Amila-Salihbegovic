@@ -128,4 +128,18 @@ public class Rectangle extends Shape {
 	public void setheight(int height) {
 		this.height=height;
 	}
+
+	@Override
+	public Rectangle clone() {
+		Rectangle rectangle = new Rectangle();
+		
+		rectangle.setupperletf(this.getupperleft());
+		rectangle.setheight(this.getheight());
+		rectangle.setwidth(this.getwidth());
+		rectangle.setSelected(this.isSelected());
+		rectangle.setColor(this.getColor());
+		rectangle.setInnerColor(this.getInnerColor());
+		
+		return rectangle;
+	}
 }

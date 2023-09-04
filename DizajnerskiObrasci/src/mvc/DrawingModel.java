@@ -21,7 +21,13 @@ public class DrawingModel {
 	public void remove(Shape p) {
 		shapes.remove(p);
 	}
-
+	
+	public void addSelected(Shape p) {
+		selectedShapes.add(p);
+	}
+	public void removeSelected(Shape p) {
+		selectedShapes.remove(p);
+	}
 	public Shape get(int index) {
 		return shapes.get(index);
 	}
