@@ -1,5 +1,7 @@
 package mvc;
 
+import java.awt.event.MouseEvent;
+
 import javax.swing.JOptionPane;
 
 import dialogs.DialogCircle;
@@ -17,6 +19,12 @@ import geometry.Shape;
 public class DrawingController {
 	private DrawingModel model;
 	private DrawingFrame frame;
+
+	public DrawingController(DrawingModel model, DrawingFrame frame) {
+		super();
+		this.model = model;
+		this.frame = frame;
+	}
 
 	public void modify() {
 		Shape selectedShape = model.getSelectedShape();
@@ -141,6 +149,70 @@ public class DrawingController {
 		}
 		model.setSelectedShape(null);
 		frame.repaint();
+	}
+
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void undo() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void redo() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void toBack() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void toFront() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void front() {
+		// TODO Auto-generated method stub
+		
+	}
+	public void back() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void innercolor() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void areacolor() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void saveCommands() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void loadCommands() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void saveDrawing() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void loadDrawing() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
