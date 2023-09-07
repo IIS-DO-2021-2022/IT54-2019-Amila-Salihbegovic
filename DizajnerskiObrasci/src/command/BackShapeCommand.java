@@ -12,27 +12,25 @@ public class BackShapeCommand implements Command{
 	private int i;
 	
 	
-	public BackShapeCommand(Shape shape, DrawingModel model, int i) {
+	public BackShapeCommand(Shape shape, DrawingModel model) {
 		super();
 		this.shape = shape;
 		this.model = model;
-		this.i = i;
+		i = model.getShapes().indexOf(shape);
 	}
 
 	@Override
 	public void execute() {
-		int length = model.getShapes().size()-1;
-		if(i!=length) {
-			Collections.swap(model.getShapes(), i-1, i);
-		}		
+		if(i>0) {
+			model.getShapes().remove(i);
+			model.addOnIndex(i-1, shape);
+		}
 	}
 
 	@Override
 	public void unexecute() {
-		int length = model.getShapes().size()-1;
-		if(i!=length) {
-			Collections.swap(model.getShapes(), i, i-1);
-		}
+		model.getShapes().remove(i-1);
+		model.addOnIndex(i, shape);
 		
 	}
 	@Override

@@ -13,7 +13,7 @@ public class Rectangle extends Shape {
 		
 	}
 	
-	public Rectangle(Point upperLeft, int width, int height) {
+	public Rectangle(Point upperLeft, int height, int width) {
 		this.upperLeft=upperLeft;
 		this.width=width;
 		this.height=height;

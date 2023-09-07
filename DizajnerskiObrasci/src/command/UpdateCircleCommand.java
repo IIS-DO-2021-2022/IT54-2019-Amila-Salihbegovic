@@ -9,11 +9,10 @@ public class UpdateCircleCommand implements Command{
 	private Circle oldCircle;
 	
 	
-	public UpdateCircleCommand(Circle circle, Circle newCircle, Circle oldCircle) {
+	public UpdateCircleCommand(Circle circle, Circle newCircle) {
 		super();
 		this.circle = circle;
 		this.newCircle = newCircle;
-		this.oldCircle = oldCircle;
 	}
 
 	@Override

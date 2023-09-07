@@ -10,11 +10,10 @@ public class UpdateRectangleCommand implements Command{
 	
 	
 	
-	public UpdateRectangleCommand(Rectangle rectangle, Rectangle newRectangle, Rectangle oldRectangle) {
+	public UpdateRectangleCommand(Rectangle rectangle, Rectangle newRectangle) {
 		super();
 		this.rectangle = rectangle;
 		this.newRectangle = newRectangle;
-		this.oldRectangle = oldRectangle;
 	}
 
 	@Override

@@ -206,7 +206,7 @@ public class DialogDonut extends JDialog{
 												new Point(Integer.parseInt(txtDX.getText().toString()),
 														Integer.parseInt(txtDY.getText().toString())),
 												Integer.parseInt(txtDR.getText().toString()),
-												Integer.parseInt(txtDIR.getText().toString()), false, btnInnerColor.getBackground(), btnOuterColor.getBackground());
+												Integer.parseInt(txtDIR.getText().toString()), false, btnOuterColor.getBackground(), btnInnerColor.getBackground());
 
 										isOK=true;
 										setVisible(false);

@@ -10,11 +10,11 @@ public class BringToFrontCommand implements Command{
 	private int i;
 	
 	
-	public BringToFrontCommand(DrawingModel drawingModel, Shape shape, int i) {
+	public BringToFrontCommand(DrawingModel drawingModel, Shape shape) {
 		super();
 		this.drawingModel = drawingModel;
 		this.shape = shape;
-		this.i = i;
+		this.i = drawingModel.getShapes().indexOf(shape);
 	}
 
 	@Override
@@ -26,8 +26,11 @@ public class BringToFrontCommand implements Command{
 
 	@Override
 	public void unexecute() {
-		drawingModel.getShapes().remove(shape);
-		drawingModel.getShapes().add(i, shape);
+		int length = drawingModel.getShapes().size();
+		if(length<1) {
+			drawingModel.getShapes().remove(length-1);
+			drawingModel.addOnIndex(i, shape);
+		}
 		
 	}
 

@@ -11,10 +11,9 @@ public class UpdateDountCommand implements Command{
 	
 	
 	
-	public UpdateDountCommand(Donut donut, Donut oldState, Donut newDonut) {
+	public UpdateDountCommand(Donut donut, Donut newDonut) {
 		super();
 		this.donut = donut;
-		this.oldState = oldState;
 		this.newDonut = newDonut;
 	}
 

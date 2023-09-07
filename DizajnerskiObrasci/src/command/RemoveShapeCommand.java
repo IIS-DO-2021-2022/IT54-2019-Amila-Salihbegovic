@@ -14,11 +14,10 @@ public class RemoveShapeCommand implements Command{
 	
 	
 	
-	public RemoveShapeCommand(DrawingModel drawingModel, ArrayList<Shape> shapesList, ArrayList<Shape> modelShapes) {
+	public RemoveShapeCommand(DrawingModel drawingModel, ArrayList<Shape> shapesList) {
 		super();
 		this.drawingModel = drawingModel;
-		this.shapesList = shapesList;
-		this.modelShapes = modelShapes;
+		this.shapesList = new ArrayList<Shape>(shapesList);
 	}
 
 	@Override

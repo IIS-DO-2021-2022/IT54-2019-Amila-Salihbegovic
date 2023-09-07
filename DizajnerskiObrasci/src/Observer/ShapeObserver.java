@@ -39,8 +39,6 @@ public class ShapeObserver implements PropertyChangeListener{
 			frame.getBtnModify().setEnabled(false);
 			frame.getBtnBringToFront().setEnabled(false);
 			frame.getBtnBringToBack().setEnabled(false);
-			frame.getBtnUndo().setEnabled(false);
-			frame.getBtnRedo().setEnabled(false);
 			frame.getBtnToFront().setEnabled(false);
 			frame.getBtnToBack().setEnabled(false);
 		}
@@ -56,16 +54,12 @@ public class ShapeObserver implements PropertyChangeListener{
 				frame.getBtnBringToFront().setEnabled(true);
 
 			}
-			frame.getBtnUndo().setEnabled(true);
-			frame.getBtnRedo().setEnabled(true);
 		}
 		if(listSize>1) {
 			frame.getBtnDelete().setEnabled(true);
 			frame.getBtnModify().setEnabled(false);
 			frame.getBtnBringToFront().setEnabled(false);
 			frame.getBtnBringToBack().setEnabled(false);
-			frame.getBtnUndo().setEnabled(false);
-			frame.getBtnRedo().setEnabled(false);
 			frame.getBtnToFront().setEnabled(false);
 			frame.getBtnToBack().setEnabled(false);
 		}

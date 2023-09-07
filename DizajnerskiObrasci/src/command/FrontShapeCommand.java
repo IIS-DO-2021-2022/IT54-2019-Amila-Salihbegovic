@@ -11,28 +11,26 @@ public class FrontShapeCommand implements Command{
 	
 	
 	
-	public FrontShapeCommand(Shape shape, DrawingModel model, int i) {
+	public FrontShapeCommand(Shape shape, DrawingModel model) {
 		super();
 		this.shape = shape;
 		this.model = model;
-		this.i = i;
+		this.i = model.getShapes().indexOf(shape);
 	}
 
 	@Override
 	public void execute() {
-		int length = model.getShapes().size()-1;
+		int length = model.getShapes().size();
 		if(i!=length) {
-			Collections.swap(model.getShapes(), i+1, i);
+			model.getShapes().remove(i);
+			model.addOnIndex(i+1, shape);
 		}
 	}
 
 	@Override
 	public void unexecute() {
-		int length = model.getShapes().size()-1;
-		if(i!=length) {
-			Collections.swap(model.getShapes(), i, i+1);
-		}
-		
+		model.getShapes().remove(i+1);
+		model.addOnIndex(i, shape);
 	}
 	@Override
 	public String toString() {

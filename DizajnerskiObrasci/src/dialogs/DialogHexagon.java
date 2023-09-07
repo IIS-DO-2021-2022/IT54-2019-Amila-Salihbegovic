@@ -8,7 +8,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JDialog;
@@ -18,26 +17,27 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-
-import geometry.Point;
+import adapter.HexagonAdapter;
 import geometry.Circle;
+import geometry.Point;
 
-public class DialogCircle extends JDialog{
+public class DialogHexagon extends JDialog{
 	private final JPanel contentPanel = new JPanel();
+
 	private JTextField txtX;
 	private JTextField txtY;
-	private JTextField txtRadius;
-	private Circle Circle;
+	private JTextField txtR;
+	private HexagonAdapter hexagon;
 	private boolean isOK;
 	private JButton btnInnerColor;
 	private JButton btnOutlineColor;
-
+	
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			DialogCircle dialog = new DialogCircle();
+			DialogHexagon dialog = new DialogHexagon();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 			dialog.setModal(true);
@@ -46,11 +46,8 @@ public class DialogCircle extends JDialog{
 		}
 	}
 
-	/**
-	 * Create the dialog.
-	 */
-	public DialogCircle() {
-		setTitle("Add/modify Circle");
+	public DialogHexagon() {
+		setTitle("Add/modify Hexagon");
 		setResizable(false);
 		setModal(true);
 		setBackground(Color.WHITE);
@@ -117,51 +114,50 @@ public class DialogCircle extends JDialog{
 			contentPanel.add(lblRadius, gbc_lblRadius);
 		}
 		{
-			txtRadius = new JTextField();
-			txtRadius.setText("");
-			txtRadius.setTransferHandler(null);
+			txtR = new JTextField();
+			txtR.setText("");
+			txtR.setTransferHandler(null);
 			GridBagConstraints gbc_txtRadius = new GridBagConstraints();
 			gbc_txtRadius.gridx = 1;
 			gbc_txtRadius.gridy = 4;
-			contentPanel.add(txtRadius, gbc_txtRadius);
-			txtRadius.setColumns(10);
+			contentPanel.add(txtR, gbc_txtRadius);
+			txtR.setColumns(10);
 		}
 		
 		btnInnerColor = new JButton("Inner Color");
 		btnInnerColor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Color innerColor = JColorChooser.showDialog(null, "Choose inner color!", btnInnerColor.getBackground());
+				Color innerColor = JColorChooser.showDialog(null, "Choose inner color", btnInnerColor.getBackground());
 				if (innerColor != null)
 					btnInnerColor.setBackground(innerColor);
+
 			}
 		});
-
 		btnInnerColor.setBackground(new Color(124,208,247));
 		btnInnerColor.setForeground(Color.BLACK);
 		GridBagConstraints gbc_btnInnerColor = new GridBagConstraints();
-		gbc_btnInnerColor.anchor = GridBagConstraints.SOUTH;
+		gbc_btnInnerColor.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnInnerColor.insets = new Insets(0, 0, 5, 5);
-		gbc_btnInnerColor.gridx = 3;
-		gbc_btnInnerColor.gridy = 7;
+		gbc_btnInnerColor.gridx = 2;
+		gbc_btnInnerColor.gridy = 6;
 		contentPanel.add(btnInnerColor, gbc_btnInnerColor);
 
 		btnOutlineColor = new JButton("Outline Color");
 		btnOutlineColor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Color outlineColor = JColorChooser.showDialog(null, "Choose outline color",
-						btnOutlineColor.getBackground());
+				Color outlineColor = JColorChooser.showDialog(null, "Choose outline color", btnOutlineColor.getBackground());
 				if (outlineColor != null)
 					btnOutlineColor.setBackground(outlineColor);
 
 			}
 		});
-
 		btnOutlineColor.setBackground(new Color(124,208,247));
 		btnOutlineColor.setForeground(Color.BLACK);
+		
 		GridBagConstraints gbc_btnOutlineColor = new GridBagConstraints();
 		gbc_btnOutlineColor.insets = new Insets(0, 0, 0, 5);
-		gbc_btnOutlineColor.gridx = 3;
-		gbc_btnOutlineColor.gridy = 8;
+		gbc_btnOutlineColor.gridx = 2;
+		gbc_btnOutlineColor.gridy = 7;
 		contentPanel.add(btnOutlineColor, gbc_btnOutlineColor);
 
 		{
@@ -173,23 +169,26 @@ public class DialogCircle extends JDialog{
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if (txtX.getText().isEmpty() || txtY.getText().isEmpty() || txtRadius.getText().isEmpty()) {
-							setisOK(false);
+						if (txtX.getText().isEmpty() || txtY.getText().isEmpty() || txtR.getText().isEmpty()) {
+							setOK(false);
 							JOptionPane.showMessageDialog(null, "All fields are required!", "ERROR",
 									JOptionPane.ERROR_MESSAGE);
 						} else {
 							try {
-								if (Integer.parseInt(txtRadius.getText().toString()) <= 0
+								if (Integer.parseInt(txtR.getText().toString()) <= 0
 										|| Integer.parseInt(txtX.getText().toString()) < 0
 										|| Integer.parseInt(txtY.getText().toString()) < 0) {
 									JOptionPane.showMessageDialog(null, "Insert values greather than 0!", "ERROR",
 											JOptionPane.ERROR_MESSAGE);
 								} else {
-									Circle = new Circle(new Point(Integer.parseInt(txtX.getText().toString()),
-											Integer.parseInt(txtY.getText().toString())),
-											Integer.parseInt(txtRadius.getText().toString()), false, btnOutlineColor.getBackground(), btnInnerColor.getBackground());
-								
-									setisOK(true);
+									hexagon = new HexagonAdapter(
+
+											new Point(Integer.parseInt(txtX.getText().toString()),
+													Integer.parseInt(txtY.getText().toString())),
+											Integer.parseInt(txtR.getText().toString()), false, 
+											 btnInnerColor.getBackground(), btnOutlineColor.getBackground());
+
+									setOK(true);
 									setVisible(false);
 								}
 							} catch (NumberFormatException e1) {
@@ -216,9 +215,8 @@ public class DialogCircle extends JDialog{
 				buttonPane.add(cancelButton);
 			}
 		}
-
 	}
-	
+
 	public JTextField getTxtX() {
 		return txtX;
 	}
@@ -235,30 +233,30 @@ public class DialogCircle extends JDialog{
 		this.txtY = txtY;
 	}
 
+	public JTextField getTxtR() {
+		return txtR;
+	}
+
+	public void setTxtR(JTextField txtR) {
+		this.txtR = txtR;
+	}
+
+	public HexagonAdapter getHexagon() {
+		return hexagon;
+	}
+
+	public void setHexagon(HexagonAdapter hexagon) {
+		this.hexagon = hexagon;
+	}
+
 	public boolean isOK() {
 		return isOK;
 	}
 
-	public void setisOK(boolean isOK) {
+	public void setOK(boolean isOK) {
 		this.isOK = isOK;
 	}
-	
-	public JTextField getTxtRadius() {
-		return txtRadius;
-	}
-	
-	public void setTxtRadius(JTextField txtRadius) {
-		this.txtRadius = txtRadius;
-	}
-	
-	public Circle getCircle() {
-		return Circle;
-	}
 
-	public void setCircle(Circle Circle) {
-		this.Circle = Circle;
-	}
-	
 	public JButton getBtnInnerColor() {
 		return btnInnerColor;
 	}
@@ -266,7 +264,7 @@ public class DialogCircle extends JDialog{
 	public void setBtnInnerColor(JButton btnInnerColor) {
 		this.btnInnerColor = btnInnerColor;
 	}
-	
+
 	public JButton getBtnOutlineColor() {
 		return btnOutlineColor;
 	}
@@ -274,4 +272,9 @@ public class DialogCircle extends JDialog{
 	public void setBtnOutlineColor(JButton btnOutlineColor) {
 		this.btnOutlineColor = btnOutlineColor;
 	}
+
+	public JPanel getContentPanel() {
+		return contentPanel;
+	}
+
 }

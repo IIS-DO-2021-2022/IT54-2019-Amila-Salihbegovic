@@ -10,24 +10,23 @@ public class BringToBackCommand implements Command{
 	private int i;
 	
 	
-	public BringToBackCommand(DrawingModel drawingModel, Shape shape, int i) {
+	public BringToBackCommand(DrawingModel drawingModel, Shape shape) {
 		super();
 		this.drawingModel = drawingModel;
 		this.shape = shape;
-		this.i = i;
 	}
 
 	@Override
 	public void execute() {
 		drawingModel.getShapes().remove(shape);
-		drawingModel.getShapes().add(0, shape);
+		drawingModel.addOnIndex(0, shape);
 		
 	}
 
 	@Override
 	public void unexecute() {
 		drawingModel.getShapes().remove(shape);
-		drawingModel.getShapes().add(i, shape);
+		drawingModel.addOnIndex(i, shape);
 		
 	}
 

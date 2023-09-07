@@ -9,11 +9,10 @@ public class UpdatePointCommand implements Command{
 	private Point oldState;
 	
 	
-	public UpdatePointCommand(Point point, Point newState, Point oldState) {
+	public UpdatePointCommand(Point point, Point newState) {
 		super();
 		this.point = point;
 		this.newState = newState;
-		this.oldState = oldState;
 	}
 
 	@Override

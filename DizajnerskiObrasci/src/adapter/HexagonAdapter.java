@@ -42,7 +42,14 @@ public class HexagonAdapter extends Shape implements Moveable{
 		newHexagon.setAreaColor(innerColor);
 		newHexagon.setBorderColor(borderColor);
 	}
-	
+	public HexagonAdapter(Point point, int radius, boolean isSelected, Color innerColor, Color borderColor) {
+		newHexagon.setX(point.getX());
+		newHexagon.setY(point.getY());
+		newHexagon.setR(radius);
+		newHexagon.setSelected(isSelected);
+		newHexagon.setAreaColor(innerColor);
+		newHexagon.setBorderColor(borderColor);
+	}
 	@Override
 	public void moveTo(int x, int y) {
 		newHexagon.setX(x);
@@ -115,12 +122,12 @@ public class HexagonAdapter extends Shape implements Moveable{
 		// TODO Auto-generated method stub
 		
 	}
-	@Override
-	public String toString() {
-		return String.format("Hexagon(X=%d,Y=%d,r=%d,outercolor=[%d-%d-%d],innercolor=[%d-%d-%d],selected=%b)", this.newHexagon.getX(),
-				this.newHexagon.getY(), this.newHexagon.getR(), getColor().getRed(), getColor().getGreen(), getColor().getBlue(),
-				getInnerColor().getRed(), getInnerColor().getGreen(), getInnerColor().getBlue(),isSelected());
-	}
+//	@Override
+//	public String toString() {
+//		return String.format("Hexagon(X=%d,Y=%d,r=%d,outercolor=[%d-%d-%d],innercolor=[%d-%d-%d],selected=%b)", this.newHexagon.getX(),
+//				this.newHexagon.getY(), this.newHexagon.getR(), getColor().getRed(), getColor().getGreen(), getColor().getBlue(),
+//				getInnerColor().getRed(), getInnerColor().getGreen(), getInnerColor().getBlue(),isSelected());
+//	}
 
 	@Override
 	public Shape clone() {

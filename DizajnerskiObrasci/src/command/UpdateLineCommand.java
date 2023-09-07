@@ -10,11 +10,10 @@ public class UpdateLineCommand implements Command{
 	
 	
 	
-	public UpdateLineCommand(Line line, Line newState, Line oldState) {
+	public UpdateLineCommand(Line line, Line newState) {
 		super();
 		this.line = line;
 		this.newState = newState;
-		this.oldState = oldState;
 	}
 
 	@Override

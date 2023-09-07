@@ -11,10 +11,9 @@ public class UpdateHexagonCommand implements Command{
 	
 	
 	
-	public UpdateHexagonCommand(HexagonAdapter hexagon, HexagonAdapter oldHex, HexagonAdapter newHex) {
+	public UpdateHexagonCommand(HexagonAdapter hexagon, HexagonAdapter newHex) {
 		super();
 		this.hexagon = hexagon;
-		this.oldHex = oldHex;
 		this.newHex = newHex;
 	}
 
