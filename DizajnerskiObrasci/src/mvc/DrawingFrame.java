@@ -355,13 +355,13 @@ public class DrawingFrame extends JFrame{
 						
 								btnToBack.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent e) {
-										controller.toBack();
+										controller.back();
 									}
 								});
 						
 								btnToFront.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent e) {
-										controller.toFront();
+										controller.front();
 									}
 								});
 

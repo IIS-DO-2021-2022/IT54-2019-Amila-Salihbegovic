@@ -42,6 +42,7 @@ public class FileLog implements FileChooser {
 		} catch (FileNotFoundException fnf) {
 			JOptionPane.showMessageDialog(null, "File not found!", "Message", JOptionPane.INFORMATION_MESSAGE);
 		} catch (IOException e) {
+			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "something went wrong!", "Message", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}

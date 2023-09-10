@@ -128,7 +128,12 @@ public class HexagonAdapter extends Shape implements Moveable{
 //				this.newHexagon.getY(), this.newHexagon.getR(), getColor().getRed(), getColor().getGreen(), getColor().getBlue(),
 //				getInnerColor().getRed(), getInnerColor().getGreen(), getInnerColor().getBlue(),isSelected());
 //	}
-
+	@Override
+	public String toString() {
+		return "Hexagon: center: " + getNewHexagon().getX() + " " + getNewHexagon().getY() + " radius: " + getNewHexagon().getR()
+				+ " area_color: " + getNewHexagon().getAreaColor().getRGB() + " line_color: "
+				+ getNewHexagon().getBorderColor().getRGB();
+	}
 	@Override
 	public Shape clone() {
 		HexagonAdapter hex = new HexagonAdapter();

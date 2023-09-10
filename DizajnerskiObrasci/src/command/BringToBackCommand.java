@@ -14,18 +14,19 @@ public class BringToBackCommand implements Command{
 		super();
 		this.drawingModel = drawingModel;
 		this.shape = shape;
+		this.i = drawingModel.getShapes().indexOf(shape);
 	}
 
 	@Override
 	public void execute() {
-		drawingModel.getShapes().remove(shape);
+		drawingModel.getShapes().remove(i);
 		drawingModel.addOnIndex(0, shape);
 		
 	}
 
 	@Override
 	public void unexecute() {
-		drawingModel.getShapes().remove(shape);
+		drawingModel.getShapes().remove(0);
 		drawingModel.addOnIndex(i, shape);
 		
 	}

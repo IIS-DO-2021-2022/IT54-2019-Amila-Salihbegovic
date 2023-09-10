@@ -19,19 +19,15 @@ public class BringToFrontCommand implements Command{
 
 	@Override
 	public void execute() {
-		drawingModel.getShapes().remove(shape);
-		drawingModel.getShapes().add(shape);
+		drawingModel.remove(shape);
+		drawingModel.add(shape);
 		
 	}
 
 	@Override
 	public void unexecute() {
-		int length = drawingModel.getShapes().size();
-		if(length<1) {
-			drawingModel.getShapes().remove(length-1);
-			drawingModel.addOnIndex(i, shape);
-		}
-		
+		drawingModel.getShapes().remove(shape);
+		drawingModel.getShapes().add(i, shape);
 	}
 
 }

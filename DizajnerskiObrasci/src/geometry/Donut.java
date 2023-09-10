@@ -1,6 +1,8 @@
 package geometry;
 
 import java.awt.Graphics;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Area;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -32,30 +34,30 @@ public class Donut extends Circle {
 		this(center, radius, innerRadius, selected, color);
 		setInnerColor(innerColor);
 	}
-
 	public void draw(Graphics g) {
-		super.draw(g);
-		Graphics2D g2d = (Graphics2D) g;
-		g2d.setColor(getColor());
-		g2d.drawOval(getcenter().getX() - this.getradius(), getcenter().getY() - this.getradius(), this.getradius() * 2,
-				this.getradius() * 2);
-		AlphaComposite alphaComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
-		g2d.setComposite(alphaComposite);
-		g2d.setColor(new Color(getColor().getRed(), getColor().getGreen(), getColor().getBlue(), 0));
-		g2d.fillOval(getcenter().getX() - this.innerRadius, getcenter().getY() - this.innerRadius, this.innerRadius * 2,
-				this.innerRadius * 2);
-		g2d.setComposite(AlphaComposite.SrcOver);
+		Graphics2D g2d = (Graphics2D) g; 
 		
-		if (selected) {
-			g.setColor(Color.BLUE);
-			g.drawRect(getcenter().getX() - innerRadius - 2, getcenter().getY() - 2, 4, 4);
-			g.drawRect(getcenter().getX() + innerRadius - 2, getcenter().getY() - 2, 4, 4);
-			g.drawRect(getcenter().getX() - 2, getcenter().getY() - innerRadius - 2, 4, 4);
-			g.drawRect(getcenter().getX() - 2, getcenter().getY() + innerRadius - 2, 4, 4);
-			
+		Ellipse2D outer = new Ellipse2D.Double(this.getcenter().getX() - this.getradius(), this.getcenter().getY() - this.getradius(), this.getradius()*2, this.getradius()*2); 
+		Ellipse2D inner = new Ellipse2D.Double(this.getcenter().getX() - this.getInnerRadius() , this.getcenter().getY() - this.getInnerRadius(), this.innerRadius * 2, this.innerRadius * 2);
+		
+		Area area = new Area(outer);
+		Area innerArea = new Area(inner);
+		area.subtract(innerArea);
+		
+		g2d.setColor(getInnerColor());
+		g2d.fill(area);
+		g2d.setColor(getColor());
+		g2d.draw(area);
+		
+		if (isSelected()) {
+			g2d.setColor(Color.BLUE);
+			g2d.drawRect(this.getcenter().getX() - 3, this.getcenter().getY() - 3, 6, 6);
+			g2d.drawRect(this.getcenter().getX() - this.getradius() - 3, this.getcenter().getY() - 3, 6, 6);
+			g2d.drawRect(this.getcenter().getX() + this.getradius() - 3, this.getcenter().getY() - 3, 6, 6);
+			g2d.drawRect(this.getcenter().getX()- 3, this.getcenter().getY() - this.getradius()- 3, 6, 6);
+			g2d.drawRect(this.getcenter().getX()- 3,this.getcenter().getY()+ this.getradius()- 3, 6, 6);
 		}
 	}
-
 	@Override
 	public Donut clone() {
 		Donut donut = new Donut();
@@ -125,7 +127,7 @@ public class Donut extends Circle {
 	}
 
 	public String toString() {
-		return super.toString() + ", inner radius=" + innerRadius;
+		return "Donut: " + super.toString() + " inner_radius: " + getInnerRadius();
 	}
 
 }

@@ -29,9 +29,10 @@ public class BackShapeCommand implements Command{
 
 	@Override
 	public void unexecute() {
-		model.getShapes().remove(i-1);
-		model.addOnIndex(i, shape);
-		
+		if(i>0) {
+			model.getShapes().remove(i-1);
+			model.addOnIndex(i, shape);
+		}
 	}
 	@Override
 	public String toString() {

@@ -63,7 +63,7 @@ public class Circle extends Shape {
 	
 	@Override
 	public String toString() {
-		return " Center: " + center + " Radisu: " + radius;
+		return "Circle:" + " center: "+ getcenter().getX() + " " + getcenter().getY()+" radius: "+getradius()+" color: "+getColor().getRGB() +" inner_color: "+getInnerColor().getRGB();
 	}
 	
 	@Override

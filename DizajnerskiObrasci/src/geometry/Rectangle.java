@@ -75,9 +75,10 @@ public class Rectangle extends Shape {
 	
 	@Override
 	public String toString() {
-		return "UpperLeft: " + upperLeft + "\nwidth: " + width + "\nheight: " + height;
+		return "Rectangle: Upper_left_point " + getupperleft().getX() + " "+ getupperleft().getY() +
+				 " height: " + getheight() + " width: " + getwidth()+ " inner_color: " + getInnerColor().getRGB()
+				 +" outer_color: " + getColor().getRGB();
 	}
-	
 	
 	@Override
 	public boolean equals(Object obj) {
