@@ -137,5 +137,16 @@ public class Circle extends Shape {
 		circle.setInnerColor(this.getInnerColor());
 		return circle;
 	}
-	
+	public void setPropertiesFrom(Circle otherCircle) {
+        this.setcenter(otherCircle.getcenter());
+        try {
+			this.setradius(otherCircle.getradius());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        this.setColor(otherCircle.getColor());
+        this.setInnerColor(otherCircle.getInnerColor());
+        this.setSelected(otherCircle.isSelected());
+    }
 }

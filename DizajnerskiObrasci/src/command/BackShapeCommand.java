@@ -21,18 +21,12 @@ public class BackShapeCommand implements Command{
 
 	@Override
 	public void execute() {
-		if(i>0) {
-			model.getShapes().remove(i);
-			model.addOnIndex(i-1, shape);
-		}
+		Collections.swap(model.getShapes(), i-1, i);
 	}
 
 	@Override
 	public void unexecute() {
-		if(i>0) {
-			model.getShapes().remove(i-1);
-			model.addOnIndex(i, shape);
-		}
+		Collections.swap(model.getShapes(), i, i-1);
 	}
 	@Override
 	public String toString() {

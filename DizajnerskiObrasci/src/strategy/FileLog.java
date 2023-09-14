@@ -12,39 +12,42 @@ import java.io.ObjectOutputStream;
 
 import javax.swing.JOptionPane;
 
+import geometry.Shape;
 import mvc.DrawingModel;
 
 public class FileLog implements FileChooser {
 
-	private DrawingModel model;
+    private DrawingModel model;
 
-	public FileLog(DrawingModel model) {
-		super();
-		this.model = model;
-	}
+    public FileLog(DrawingModel model) {
+        this.model = model;
+    }
 
-	@Override
-	public void save(String path) {
-		File file = new File(path);
+    @Override
+    public void save(String path) {
+        File file = new File(path);
 
-		try {
-			for (int i = 0; i < model.getShapes().size(); i++) {
-				if (model.getShapes().get(i).isSelected() == true) {
-					model.getShapes().get(i).setSelected(false);
-				}
-			}
-			FileOutputStream stream = new FileOutputStream(file);
-			ObjectOutputStream object = new ObjectOutputStream(stream);
-			object.writeObject(model.getShapes());
-			object.flush();
-			object.close();
-			stream.close();
-		} catch (FileNotFoundException fnf) {
-			JOptionPane.showMessageDialog(null, "File not found!", "Message", JOptionPane.INFORMATION_MESSAGE);
-		} catch (IOException e) {
-			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "something went wrong!", "Message", JOptionPane.INFORMATION_MESSAGE);
-		}
-	}
+        try {
+            // Deselect all shapes before saving
+            deselectAllShapes();
 
+            // Write the shapes to the file
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(file));
+            objectOutputStream.writeObject(model.getShapes());
+            objectOutputStream.close();
+
+            JOptionPane.showMessageDialog(null, "File saved successfully!", "Message", JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Something went wrong while saving!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void deselectAllShapes() {
+        for (Shape shape : model.getShapes()) {
+            if (shape.isSelected()) {
+                shape.setSelected(false);
+            }
+        }
+    }
 }

@@ -23,9 +23,9 @@ import geometry.Point;
 
 public class DialogDonut extends JDialog{
 	private final JPanel contentPanel = new JPanel();
-	private JTextField txtDX;
-	private JTextField txtDY;
-	private JTextField txtDR;
+	private JTextField txtX;
+	private JTextField txtY;
+	private JTextField txtR;
 	private JTextField txtDIR;
 	private JButton btnOuterColor;
 	private JButton btnInnerColor;
@@ -76,14 +76,14 @@ public class DialogDonut extends JDialog{
 			contentPanel.add(lblX, gbc_lblX);
 		}
 		{
-			txtDX = new JTextField();
-			txtDX.setTransferHandler(null);
+			txtX = new JTextField();
+			txtX.setTransferHandler(null);
 			GridBagConstraints gbc_txtDX = new GridBagConstraints();
 			gbc_txtDX.insets = new Insets(0, 0, 5, 0);
 			gbc_txtDX.gridx = 1;
 			gbc_txtDX.gridy = 2;
-			contentPanel.add(txtDX, gbc_txtDX);
-			txtDX.setColumns(10);
+			contentPanel.add(txtX, gbc_txtDX);
+			txtX.setColumns(10);
 		}
 		{
 			JLabel lblY = new JLabel("Insert coordinate Y (center point):");
@@ -95,14 +95,14 @@ public class DialogDonut extends JDialog{
 			contentPanel.add(lblY, gbc_lblY);
 		}
 		{
-			txtDY = new JTextField();
-			txtDY.setTransferHandler(null);
+			txtY = new JTextField();
+			txtY.setTransferHandler(null);
 			GridBagConstraints gbc_txtDY = new GridBagConstraints();
 			gbc_txtDY.insets = new Insets(0, 0, 5, 0);
 			gbc_txtDY.gridx = 1;
 			gbc_txtDY.gridy = 3;
-			contentPanel.add(txtDY, gbc_txtDY);
-			txtDY.setColumns(10);
+			contentPanel.add(txtY, gbc_txtDY);
+			txtY.setColumns(10);
 		}
 		{
 			JLabel lblRadius = new JLabel("Insert radius:");
@@ -115,14 +115,14 @@ public class DialogDonut extends JDialog{
 			contentPanel.add(lblRadius, gbc_lblRadius);
 		}
 		{
-			txtDR = new JTextField();
-			txtDR.setTransferHandler(null);
+			txtR = new JTextField();
+			txtR.setTransferHandler(null);
 			GridBagConstraints gbc_txtDR = new GridBagConstraints();
 			gbc_txtDR.insets = new Insets(0, 0, 5, 0);
 			gbc_txtDR.gridx = 1;
 			gbc_txtDR.gridy = 4;
-			contentPanel.add(txtDR, gbc_txtDR);
-			txtDR.setColumns(10);
+			contentPanel.add(txtR, gbc_txtDR);
+			txtR.setColumns(10);
 		}
 		{
 			JLabel lblInnerRadius = new JLabel("Insert inner radius:");
@@ -188,24 +188,24 @@ public class DialogDonut extends JDialog{
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						if(txtDX.getText().trim().isEmpty() || txtDY.getText().trim().isEmpty() || txtDR.getText().trim().isEmpty() || txtDIR.getText().trim().isEmpty()) 
+						if(txtX.getText().trim().isEmpty() || txtY.getText().trim().isEmpty() || txtR.getText().trim().isEmpty() || txtDIR.getText().trim().isEmpty()) 
 						{
 							JOptionPane.showMessageDialog(null, "All values are required!");
 						}
 						else {
 							try {
 								if (Integer.parseInt(txtDIR.getText().toString()) <= 0
-										|| Integer.parseInt(txtDR.getText().toString()) <= 0
-										|| Integer.parseInt(txtDX.getText().toString()) < 0
-										|| Integer.parseInt(txtDY.getText().toString()) < 0)
+										|| Integer.parseInt(txtR.getText().toString()) <= 0
+										|| Integer.parseInt(txtX.getText().toString()) < 0
+										|| Integer.parseInt(txtY.getText().toString()) < 0)
 									JOptionPane.showMessageDialog(null, "Insert values greater then 0!", "Error",JOptionPane.ERROR_MESSAGE);
 								else {
 									if (Integer.parseInt(txtDIR.getText().toString()) < Integer
-											.parseInt(txtDR.getText().toString())) {
+											.parseInt(txtR.getText().toString())) {
 										donut = new Donut(
-												new Point(Integer.parseInt(txtDX.getText().toString()),
-														Integer.parseInt(txtDY.getText().toString())),
-												Integer.parseInt(txtDR.getText().toString()),
+												new Point(Integer.parseInt(txtX.getText().toString()),
+														Integer.parseInt(txtY.getText().toString())),
+												Integer.parseInt(txtR.getText().toString()),
 												Integer.parseInt(txtDIR.getText().toString()), false, btnOuterColor.getBackground(), btnInnerColor.getBackground());
 
 										isOK=true;
@@ -244,27 +244,6 @@ public class DialogDonut extends JDialog{
 		}
 	}
 
-	public JTextField getTxtDX() {
-		return txtDX;
-	}
-
-	public void setTxtDX(JTextField txtDX) {
-		this.txtDX = txtDX;
-	}
-	public JTextField getTxtDY() {
-		return txtDY;
-	}
-
-	public void setTxtDY(JTextField txtDY) {
-		this.txtDY = txtDY;
-	}
-	public JTextField getTxtDR() {
-		return txtDR;
-	}
-
-	public void setTxtDR(JTextField txtDR) {
-		this.txtDR = txtDR;
-	}
 	public JTextField getTxtDIR() {
 		return txtDIR;
 	}
@@ -299,6 +278,30 @@ public class DialogDonut extends JDialog{
 
 	public void setisOK(boolean isOK) {
 		this.isOK = isOK;
+	}
+
+	public JTextField getTxtX() {
+		return txtX;
+	}
+
+	public void setTxtX(JTextField txtX) {
+		this.txtX = txtX;
+	}
+
+	public JTextField getTxtY() {
+		return txtY;
+	}
+
+	public void setTxtY(JTextField txtY) {
+		this.txtY = txtY;
+	}
+
+	public JTextField getTxtR() {
+		return txtR;
+	}
+
+	public void setTxtR(JTextField txtR) {
+		this.txtR = txtR;
 	}
 	
 }

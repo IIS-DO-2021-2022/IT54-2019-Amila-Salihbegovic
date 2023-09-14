@@ -9,7 +9,6 @@ public class AddShapeCommand implements Command {
 	private DrawingModel model;
 
 	public AddShapeCommand(Shape shape, DrawingModel model) {
-		super();
 		this.shape = shape;
 		this.model = model;
 	}

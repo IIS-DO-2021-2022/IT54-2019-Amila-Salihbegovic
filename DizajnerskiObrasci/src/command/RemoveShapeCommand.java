@@ -1,44 +1,50 @@
 package command;
 
-import java.util.ArrayList;
-
 import geometry.Shape;
 import mvc.DrawingModel;
 
-public class RemoveShapeCommand implements Command{
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-	private DrawingModel drawingModel;
-	private ArrayList<Shape> shapesList;
-	private ArrayList<Shape> modelShapes = new ArrayList<Shape>();
-	
-	
-	
-	
-	public RemoveShapeCommand(DrawingModel drawingModel, ArrayList<Shape> shapesList) {
-		super();
-		this.drawingModel = drawingModel;
-		this.shapesList = new ArrayList<Shape>(shapesList);
-	}
+public class RemoveShapeCommand implements Command {
 
-	@Override
-	public void execute() {
-		modelShapes.addAll(drawingModel.getShapes());
-		for(Shape shape:shapesList) {
-			drawingModel.remove(shape);
-			drawingModel.removeSelected(shape);
-		}
-		
-	}
+    private DrawingModel drawingModel;
+    private Map<Shape, Integer> removedShapes = new HashMap<>();
 
-	@Override
-	public void unexecute() {
-		drawingModel.getShapes().clear();
-		drawingModel.getShapes().addAll(modelShapes);
-		
-		for(Shape shape:shapesList) {
-			shape.setSelected(true);
-			drawingModel.addSelected(shape);
-		}
-	}
+    public RemoveShapeCommand(DrawingModel drawingModel, List<Shape> shapesList) {
+        this.drawingModel = drawingModel;
 
+        // Save the removed shapes and their positions
+        for (Shape shape : shapesList) {
+            int position = drawingModel.getShapes().indexOf(shape);
+            if (position >= 0) {
+                removedShapes.put(shape, position);
+            }
+        }
+    }
+
+    @Override
+    public void execute() {
+        for (Shape shape : removedShapes.keySet()) {
+            drawingModel.remove(shape);
+            drawingModel.removeSelected(shape);
+        }
+    }
+
+    @Override
+    public void unexecute() {
+        for (Map.Entry<Shape, Integer> entry : removedShapes.entrySet()) {
+            Shape shape = entry.getKey();
+            int position = entry.getValue();
+
+            // Ensure the position is valid
+            if (position >= 0 && position <= drawingModel.getShapes().size()) {
+                drawingModel.getShapes().add(position, shape);
+                shape.setSelected(true);
+                drawingModel.addSelected(shape);
+            }
+        }
+    }
 }

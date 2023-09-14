@@ -130,5 +130,12 @@ public class Line extends Shape {
 		return "Line: " + "start_point: " + getstartpoint().getX() + " " + getstartpoint().getY() + " " + "end_point: "
 				+ +getendpoint().getX() + " " + getendpoint().getY() + " color: " + color.getRGB();
 	}
+	 public void setPropertiesFrom(Line otherLine) {
+	        this.setstartpoint(otherLine.getstartpoint());
+	        this.setendpoint(otherLine.getendpoint());
+	        this.setColor(otherLine.getColor());
+	        this.setInnerColor(otherLine.getInnerColor());
+	        this.setSelected(otherLine.isSelected());
+	    }
 
 }

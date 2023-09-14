@@ -8,25 +8,27 @@ import javax.swing.JOptionPane;
 
 import mvc.DrawingFrame;
 
-public class FileCommand implements FileChooser{
+public class FileCommand implements FileChooser {
 
-	DrawingFrame frame;
-	
-	public FileCommand(DrawingFrame frame) {
-		super();
-		this.frame = frame;
-	}
+    private DrawingFrame frame;
 
-	@Override
-	public void save(String path) {
-		File file = new File(path);
-		try {
-			FileWriter fileWriter = new FileWriter(file);
-			fileWriter.write(frame.getTextArea().getText());
-			fileWriter.close();
-		}catch(IOException e) {
-			JOptionPane.showMessageDialog(null, "something went wrong!", "Message", JOptionPane.INFORMATION_MESSAGE);
-		}
-	}
+    public FileCommand(DrawingFrame frame) {
+        this.frame = frame;
+    }
 
+    @Override
+    public void save(String path) {
+        File file = new File(path);
+
+        try {
+            FileWriter fileWriter = new FileWriter(file);
+            fileWriter.write(frame.getTextArea().getText());
+            fileWriter.close();
+
+            JOptionPane.showMessageDialog(null, "File saved successfully!", "Message", JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Something went wrong while saving!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 }

@@ -2,39 +2,26 @@ package command;
 
 import geometry.Line;
 
-public class UpdateLineCommand implements Command{
+public class UpdateLineCommand implements Command {
 
-	private Line line;
-	private Line newState;
-	private Line oldState;
-	
-	
-	
-	public UpdateLineCommand(Line line, Line newState) {
-		super();
-		this.line = line;
-		this.newState = newState;
-	}
+    private Line line;
+    private Line oldState;
+    private Line newState;
 
-	@Override
-	public void execute() {
-		oldState = line.clone();
-		
-		line.setstartpoint(newState.getstartpoint());
-		line.setendpoint(newState.getendpoint());
-		line.setSelected(newState.isSelected());
-		line.setColor(newState.getColor());
-		line.setInnerColor(newState.getInnerColor());
-		
-	}
+    public UpdateLineCommand(Line line, Line newState) {
+        this.line = line;
+        this.newState = newState;
+    }
 
-	@Override
-	public void unexecute() {
-		line.setstartpoint(oldState.getstartpoint());
-		line.setendpoint(oldState.getendpoint());
-		line.setSelected(oldState.isSelected());
-		line.setColor(newState.getColor());
-		line.setInnerColor(newState.getInnerColor());
-	}
+    @Override
+    public void execute() {
+        oldState = line.clone();
 
+        line.setPropertiesFrom(newState);
+    }
+
+    @Override
+    public void unexecute() {
+        line.setPropertiesFrom(oldState);
+    }
 }

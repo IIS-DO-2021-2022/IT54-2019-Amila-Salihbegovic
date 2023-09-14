@@ -129,5 +129,17 @@ public class Donut extends Circle {
 	public String toString() {
 		return "Donut: " + super.toString() + " inner_radius: " + getInnerRadius();
 	}
-
+	 public void setPropertiesFrom(Donut otherDonut) {
+	        this.setcenter(otherDonut.getcenter());
+	        try {
+				this.setradius(otherDonut.getradius());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        this.setColor(otherDonut.getColor());
+	        this.setInnerRadius(otherDonut.getInnerRadius());
+	        this.setInnerColor(otherDonut.getInnerColor());
+	        this.setSelected(otherDonut.isSelected());
+	    }
 }

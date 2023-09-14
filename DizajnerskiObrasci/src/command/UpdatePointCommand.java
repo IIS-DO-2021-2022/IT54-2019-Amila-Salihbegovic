@@ -19,17 +19,13 @@ public class UpdatePointCommand implements Command{
 	public void execute() {
 		oldState = point.clone();
 		
-		point.setX(newState.getX());
-		point.setY(newState.getY());
-		point.setColor(newState.getColor());
+		point.setPropertiesFrom(newState);
 		
 	}
 
 	@Override
 	public void unexecute() {
-		point.setX(oldState.getX());
-		point.setY(oldState.getY());
-		point.setColor(oldState.getColor());
+		point.setPropertiesFrom(oldState);
 		
 	}
 

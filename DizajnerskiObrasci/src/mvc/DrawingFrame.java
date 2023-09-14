@@ -29,6 +29,14 @@ import javax.swing.SwingConstants;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import java.awt.GridLayout;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JPopupMenu;
+import java.awt.Component;
+import javax.swing.JTabbedPane;
+import javax.swing.JMenu;
+import java.awt.Dimension;
 
 public class DrawingFrame extends JFrame{
 	private DrawingView view = new DrawingView();
@@ -57,15 +65,18 @@ public class DrawingFrame extends JFrame{
 	private final JScrollPane scrollPane = new JScrollPane(textArea);
 	private JButton btnNext;
 	private final JButton tglbtnInnerColor = new JButton("Inner color ");
-	private final JButton tglbtnNOuterColor = new JButton("Area color");
+	private final JButton tglbtnNOuterColor = new JButton("Border color");
 	private final JPanel panel = new JPanel();
-	private final JPanel panel_1 = new JPanel();
-	private final JLabel lblNewLabel = new JLabel("Shapes:");
-	private final JLabel lblNewLabel_1 = new JLabel("Colors:");
+	private final JMenuBar menuBar = new JMenuBar();
+	private final JMenu mnNewMenu = new JMenu("Shapes");
+	private final JMenu mnNewMenu_1 = new JMenu("Colors");
+	private final JMenu mnNewMenu_2 = new JMenu("Commands");
 	
 
 	public DrawingFrame() {
-		view.setBackground(new Color(253, 245, 230));
+		view.setAlignmentY(0.0f);
+		view.setAlignmentX(0.0f);
+		view.setBackground(new Color(230, 230, 250));
 
 		view.addMouseListener(new MouseAdapter() {
 			@Override
@@ -79,6 +90,170 @@ public class DrawingFrame extends JFrame{
 		setTitle("Drawing Application-Salihbegovic Amila IT54/2019");
 		setBounds(300, 300, 900, 800);
 		setResizable(true);
+		ButtonGroup btnGroup = new ButtonGroup();
+		menuBar.setBackground(Color.BLACK);
+		setJMenuBar(menuBar);
+				mnNewMenu.setForeground(Color.BLUE);
+				mnNewMenu.setFont(new Font("Sitka Heading", Font.BOLD, 15));
+				
+				menuBar.add(mnNewMenu);
+				
+						btnGroup.add(tglbtnPoint);
+						tglbtnPoint.setMaximumSize(new Dimension(93, 21));
+						tglbtnPoint.setPreferredSize(new Dimension(90, 21));
+						mnNewMenu.add(tglbtnPoint);
+						tglbtnPoint.setBackground(SystemColor.menu);
+						tglbtnPoint.setForeground(Color.BLUE);
+						tglbtnPoint.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
+						btnGroup.add(tglbtnLine);
+						tglbtnLine.setMaximumSize(new Dimension(93, 21));
+						mnNewMenu.add(tglbtnLine);
+						tglbtnLine.setBackground(new Color(255, 255, 240));
+						tglbtnLine.setForeground(Color.BLUE);
+						tglbtnLine.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
+						btnGroup.add(tglbtnCircle);
+						tglbtnCircle.setMaximumSize(new Dimension(93, 21));
+						mnNewMenu.add(tglbtnCircle);
+						tglbtnCircle.setBackground(new Color(255, 255, 240));
+						tglbtnCircle.setForeground(Color.BLUE);
+						tglbtnCircle.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
+						btnGroup.add(tglbtnDonut);
+						tglbtnDonut.setMaximumSize(new Dimension(93, 21));
+						mnNewMenu.add(tglbtnDonut);
+						tglbtnDonut.setBackground(new Color(255, 255, 240));
+						tglbtnDonut.setForeground(Color.BLUE);
+						tglbtnDonut.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
+						btnGroup.add(tglbtnRectangle);
+						mnNewMenu.add(tglbtnRectangle);
+						tglbtnRectangle.setBackground(new Color(255, 255, 240));
+						tglbtnRectangle.setForeground(Color.BLUE);
+						tglbtnRectangle.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
+						btnGroup.add(tglbtnHexagon);
+						tglbtnHexagon.setMaximumSize(new Dimension(92, 21));
+						mnNewMenu.add(tglbtnHexagon);
+						tglbtnHexagon.setBackground(new Color(255, 255, 240));
+						tglbtnHexagon.setForeground(Color.BLUE);
+						tglbtnHexagon.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
+						mnNewMenu_1.setForeground(Color.BLUE);
+						mnNewMenu_1.setFont(new Font("Sitka Heading", Font.BOLD, 15));
+						
+						menuBar.add(mnNewMenu_1);
+						tglbtnInnerColor.setMaximumSize(new Dimension(140, 21));
+						mnNewMenu_1.add(tglbtnInnerColor);
+						tglbtnInnerColor.setForeground(Color.BLUE);
+						tglbtnInnerColor.setBackground(SystemColor.menu);
+						
+														
+														tglbtnInnerColor.addActionListener(new ActionListener() {
+															public void actionPerformed(ActionEvent e) {
+																controller.addinnercolor();
+																getTglbtnInnerColor().setSelected(false);
+															}
+														});
+														tglbtnInnerColor.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
+														tglbtnInnerColor.setEnabled(true);
+														mnNewMenu_1.add(tglbtnNOuterColor);
+														tglbtnNOuterColor.setForeground(Color.BLUE);
+														tglbtnNOuterColor.setBackground(SystemColor.menu);
+														
+														tglbtnNOuterColor.addActionListener(new ActionListener() {
+															public void actionPerformed(ActionEvent e) {
+																controller.addOuterColor();
+																getTglbtnNOuterColor().setSelected(false);
+
+															}
+														});
+														tglbtnNOuterColor.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
+														mnNewMenu_2.setForeground(Color.BLUE);
+														mnNewMenu_2.setFont(new Font("Sitka Heading", Font.BOLD, 15));
+														
+														menuBar.add(mnNewMenu_2);
+														tglbtnSelect.setMaximumSize(new Dimension(133, 21));
+														mnNewMenu_2.add(tglbtnSelect);
+														tglbtnSelect.setBackground(SystemColor.menu);
+														tglbtnSelect.setForeground(Color.BLUE);
+														tglbtnSelect.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
+														btnDelete.setMaximumSize(new Dimension(133, 21));
+														mnNewMenu_2.add(btnDelete);
+														btnDelete.setBackground(SystemColor.menu);
+														btnDelete.setForeground(Color.BLUE);
+														btnDelete.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
+														btnDelete.setEnabled(false);
+														
+																btnDelete.addActionListener(new ActionListener() {
+																	public void actionPerformed(ActionEvent e) {
+																		controller.delete();
+																	}
+																});
+																btnGroup.add(btnDelete);
+																btnModify.setMaximumSize(new Dimension(133, 21));
+																mnNewMenu_2.add(btnModify);
+																btnModify.setBackground(SystemColor.menu);
+																btnModify.setForeground(Color.BLUE);
+																btnModify.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
+																btnModify.setEnabled(false);
+																
+																		btnModify.addActionListener(new ActionListener() {
+																			public void actionPerformed(ActionEvent e) {
+																
+																				controller.modify();
+																
+																			}
+																		});
+																		btnGroup.add(btnModify);
+																		btnToFront.setMaximumSize(new Dimension(133, 21));
+																		mnNewMenu_2.add(btnToFront);
+																		btnToFront.setBackground(SystemColor.menu);
+																		btnToFront.setForeground(Color.BLUE);
+																		btnToFront.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
+																		btnToFront.setEnabled(false);
+																		btnGroup.add(btnToFront);
+																		btnGroup.add(btnToBack);
+																		btnToBack.setMaximumSize(new Dimension(133, 21));
+																		mnNewMenu_2.add(btnToBack);
+																		btnToBack.setBackground(SystemColor.menu);
+																		btnToBack.setForeground(Color.BLUE);
+																		btnToBack.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
+																		btnToBack.setEnabled(false);
+																		btnGroup.add(btnBringToFront);
+																		btnBringToFront.setMaximumSize(new Dimension(133, 21));
+																		mnNewMenu_2.add(btnBringToFront);
+																		btnBringToFront.setBackground(SystemColor.menu);
+																		btnBringToFront.setForeground(Color.BLUE);
+																		btnBringToFront.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
+																		btnBringToFront.setEnabled(false);
+																		btnGroup.add(btnBringToBack);
+																		btnBringToBack.setMaximumSize(new Dimension(133, 21));
+																		mnNewMenu_2.add(btnBringToBack);
+																		btnBringToBack.setBackground(SystemColor.menu);
+																		btnBringToBack.setForeground(Color.BLUE);
+																		btnBringToBack.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
+																		btnBringToBack.setEnabled(false);
+																		
+																				btnBringToBack.addActionListener(new ActionListener() {
+																					public void actionPerformed(ActionEvent e) {
+																						controller.toBack();
+																					}
+																				});
+																		
+																				btnBringToFront.addActionListener(new ActionListener() {
+																					public void actionPerformed(ActionEvent e) {
+																						controller.toFront();
+																					}
+																				});
+																		
+																				btnToBack.addActionListener(new ActionListener() {
+																					public void actionPerformed(ActionEvent e) {
+																						controller.back();
+																					}
+																				});
+																		
+																				btnToFront.addActionListener(new ActionListener() {
+																					public void actionPerformed(ActionEvent e) {
+																						controller.front();
+																					}
+																				});
+		contentPane.setBackground(new Color(230, 230, 250));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
@@ -86,10 +261,12 @@ public class DrawingFrame extends JFrame{
 		
 		getContentPane().add(view, BorderLayout.CENTER);	
 
-		ButtonGroup btnGroup = new ButtonGroup();
+		
 
 		JPanel pnlEast = new JPanel();
-		pnlEast.setBackground(new Color(245, 222, 179));
+		pnlEast.setAlignmentY(0.0f);
+		pnlEast.setAlignmentX(0.0f);
+		pnlEast.setBackground(Color.BLACK);
 		pnlEast.setForeground(new Color(191, 205, 219));
 		contentPane.add(pnlEast, BorderLayout.EAST);
 		GridBagLayout gbl_pnlEast = new GridBagLayout();
@@ -99,6 +276,9 @@ public class DrawingFrame extends JFrame{
 		gbl_pnlEast.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
 				Double.MIN_VALUE };
 		pnlEast.setLayout(gbl_pnlEast);
+		textArea.setAlignmentY(0.0f);
+		textArea.setAlignmentX(0.0f);
+		textArea.setBackground(new Color(230, 230, 250));
 		textArea.setTabSize(40);
 		textArea.setColumns(30);
 		textArea.setRows(8);
@@ -113,8 +293,8 @@ public class DrawingFrame extends JFrame{
 		pnlEast.add(scrollPane, gbc_scrollPane);
 				
 						JButton btnSaveCommands = new JButton("Save Commands");
-						btnSaveCommands.setBackground(new Color(245, 222, 179));
-						btnSaveCommands.setForeground(new Color(244, 164, 96));
+						btnSaveCommands.setBackground(SystemColor.menu);
+						btnSaveCommands.setForeground(Color.BLUE);
 						btnSaveCommands.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
 						btnSaveCommands.setEnabled(true);
 						GridBagConstraints gbc_btnSaveCommands = new GridBagConstraints();
@@ -130,8 +310,8 @@ public class DrawingFrame extends JFrame{
 								});
 		
 				JButton btnLoadCommands = new JButton("Load Commands");
-				btnLoadCommands.setBackground(new Color(245, 222, 179));
-				btnLoadCommands.setForeground(new Color(244, 164, 96));
+				btnLoadCommands.setBackground(SystemColor.menu);
+				btnLoadCommands.setForeground(Color.BLUE);
 				btnLoadCommands.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
 				btnLoadCommands.setEnabled(true);
 				GridBagConstraints gbc_btnLoadCommands = new GridBagConstraints();
@@ -147,8 +327,8 @@ public class DrawingFrame extends JFrame{
 						});
 
 		btnNext = new JButton("Next");
-		btnNext.setBackground(new Color(245, 222, 179));
-		btnNext.setForeground(new Color(244, 164, 96));
+		btnNext.setBackground(SystemColor.menu);
+		btnNext.setForeground(Color.BLUE);
 		btnNext.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
 		GridBagConstraints gbc_btnNext = new GridBagConstraints();
 		btnNext.setEnabled(false);
@@ -158,8 +338,8 @@ public class DrawingFrame extends JFrame{
 		pnlEast.add(btnNext, gbc_btnNext);
 		
 				JButton btnSaveDrawing = new JButton("Save Drawing");
-				btnSaveDrawing.setForeground(new Color(244, 164, 96));
-				btnSaveDrawing.setBackground(new Color(245, 222, 179));
+				btnSaveDrawing.setForeground(Color.BLUE);
+				btnSaveDrawing.setBackground(SystemColor.menu);
 				btnSaveDrawing.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
 				btnSaveDrawing.setEnabled(true);
 				GridBagConstraints gbc_btnSaveDrawing = new GridBagConstraints();
@@ -175,8 +355,8 @@ public class DrawingFrame extends JFrame{
 						});
 		
 				JButton btnLoadDrawing = new JButton("Load Drawing");
-				btnLoadDrawing.setForeground(new Color(244, 164, 96));
-				btnLoadDrawing.setBackground(new Color(245, 222, 179));
+				btnLoadDrawing.setForeground(Color.BLUE);
+				btnLoadDrawing.setBackground(SystemColor.menu);
 				btnLoadDrawing.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
 				btnLoadDrawing.setEnabled(true);
 				GridBagConstraints gbc_btnLoadDrawing = new GridBagConstraints();
@@ -184,186 +364,49 @@ public class DrawingFrame extends JFrame{
 				gbc_btnLoadDrawing.gridx = 0;
 				gbc_btnLoadDrawing.gridy = 8;
 				pnlEast.add(btnLoadDrawing, gbc_btnLoadDrawing);
+				GridBagConstraints gbc_btnUndo = new GridBagConstraints();
+				gbc_btnUndo.insets = new Insets(0, 0, 5, 0);
+				gbc_btnUndo.gridx = 0;
+				gbc_btnUndo.gridy = 10;
+				pnlEast.add(btnUndo, gbc_btnUndo);
+				btnUndo.setBackground(SystemColor.menu);
+				btnUndo.setForeground(Color.BLUE);
+				btnUndo.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
+				btnUndo.setEnabled(true);
+				btnGroup.add(btnUndo);
+				GridBagConstraints gbc_btnRedo = new GridBagConstraints();
+				gbc_btnRedo.gridx = 0;
+				gbc_btnRedo.gridy = 11;
+				btnRedo.setBackground(SystemColor.menu);
+				pnlEast.add(btnRedo, gbc_btnRedo);
+				btnRedo.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
+				btnRedo.setEnabled(true);
+				btnRedo.setForeground(Color.BLUE);
+				btnGroup.add(btnRedo);
+				
+						btnRedo.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								controller.redo();
+							}
+						});
+				
+						btnUndo.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								controller.undo();
+							}
+						});
 				btnLoadDrawing.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						controller.loadDrawing();
 					}
 				});
-		panel.setBackground(new Color(245, 222, 179));
+		panel.setBackground(Color.BLACK);
 		
 		contentPane.add(panel, BorderLayout.SOUTH);
 		panel.add(lblNewLabel_2);
-		lblNewLabel_2.setForeground(new Color(244, 164, 96));
+		lblNewLabel_2.setForeground(Color.BLACK);
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_2.setFont(new Font("Sitka Heading", Font.BOLD, 12));
-		tglbtnSelect.setBackground(new Color(245, 222, 179));
-		tglbtnSelect.setForeground(new Color(244, 164, 96));
-		panel.add(tglbtnSelect);
-		tglbtnSelect.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
-		btnDelete.setBackground(new Color(245, 222, 179));
-		btnDelete.setForeground(new Color(244, 164, 96));
-		panel.add(btnDelete);
-		btnDelete.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
-		btnDelete.setEnabled(false);
-		
-				btnDelete.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						controller.delete();
-					}
-				});
-				btnGroup.add(btnDelete);
-				btnModify.setBackground(new Color(245, 222, 179));
-				btnModify.setForeground(new Color(244, 164, 96));
-				panel.add(btnModify);
-				btnModify.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
-				btnModify.setEnabled(false);
-				
-						btnModify.addActionListener(new ActionListener() {
-							public void actionPerformed(ActionEvent e) {
-				
-								controller.modify();
-				
-							}
-						});
-						btnGroup.add(btnModify);
-						btnToFront.setBackground(new Color(245, 222, 179));
-						btnToFront.setForeground(new Color(244, 164, 96));
-						panel.add(btnToFront);
-						btnToFront.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
-						btnToFront.setEnabled(false);
-						btnGroup.add(btnToFront);
-						btnGroup.add(btnToBack);
-						btnToBack.setBackground(new Color(245, 222, 179));
-						btnToBack.setForeground(new Color(244, 164, 96));
-						panel.add(btnToBack);
-						btnToBack.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
-						btnToBack.setEnabled(false);
-						btnGroup.add(btnBringToFront);
-						btnBringToFront.setBackground(new Color(245, 222, 179));
-						btnBringToFront.setForeground(new Color(244, 164, 96));
-						panel.add(btnBringToFront);
-						btnBringToFront.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
-						btnBringToFront.setEnabled(false);
-						btnGroup.add(btnBringToBack);
-						btnBringToBack.setBackground(new Color(245, 222, 179));
-						btnBringToBack.setForeground(new Color(244, 164, 96));
-						panel.add(btnBringToBack);
-						btnBringToBack.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
-						btnBringToBack.setEnabled(false);
-						btnUndo.setBackground(new Color(245, 222, 179));
-						btnUndo.setForeground(new Color(244, 164, 96));
-						panel.add(btnUndo);
-						btnUndo.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
-						btnUndo.setEnabled(true);
-						btnGroup.add(btnUndo);
-						panel.add(btnRedo);
-						btnRedo.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
-						btnRedo.setEnabled(true);
-						btnRedo.setForeground(new Color(244, 164, 96));
-						btnGroup.add(btnRedo);
-						panel_1.setBackground(new Color(245, 222, 179));
-						
-						contentPane.add(panel_1, BorderLayout.NORTH);
-						lblNewLabel.setForeground(new Color(244, 164, 96));
-						lblNewLabel.setFont(new Font("Sitka Heading", Font.BOLD, 15));
-						
-						panel_1.add(lblNewLabel);
-						
-								btnGroup.add(tglbtnPoint);
-								tglbtnPoint.setBackground(new Color(245, 222, 179));
-								tglbtnPoint.setForeground(new Color(244, 164, 96));
-								panel_1.add(tglbtnPoint);
-								tglbtnPoint.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
-								btnGroup.add(tglbtnLine);
-								tglbtnLine.setBackground(new Color(245, 222, 179));
-								tglbtnLine.setForeground(new Color(244, 164, 96));
-								panel_1.add(tglbtnLine);
-								tglbtnLine.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
-								btnGroup.add(tglbtnCircle);
-								tglbtnCircle.setBackground(new Color(245, 222, 179));
-								tglbtnCircle.setForeground(new Color(244, 164, 96));
-								panel_1.add(tglbtnCircle);
-								tglbtnCircle.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
-								btnGroup.add(tglbtnDonut);
-								tglbtnDonut.setBackground(new Color(245, 222, 179));
-								tglbtnDonut.setForeground(new Color(244, 164, 96));
-								panel_1.add(tglbtnDonut);
-								tglbtnDonut.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
-								btnGroup.add(tglbtnRectangle);
-								tglbtnRectangle.setBackground(new Color(245, 222, 179));
-								tglbtnRectangle.setForeground(new Color(244, 164, 96));
-								panel_1.add(tglbtnRectangle);
-								tglbtnRectangle.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
-								btnGroup.add(tglbtnHexagon);
-								tglbtnHexagon.setBackground(new Color(245, 222, 179));
-								tglbtnHexagon.setForeground(new Color(244, 164, 96));
-								panel_1.add(tglbtnHexagon);
-								tglbtnHexagon.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
-								lblNewLabel_1.setForeground(new Color(244, 164, 96));
-								lblNewLabel_1.setFont(new Font("Sitka Heading", Font.BOLD, 15));
-								
-								panel_1.add(lblNewLabel_1);
-								tglbtnInnerColor.setForeground(new Color(244, 164, 96));
-								panel_1.add(tglbtnInnerColor);
-								tglbtnInnerColor.setBackground(new Color(245, 245, 220));
-								
-																
-																tglbtnInnerColor.addActionListener(new ActionListener() {
-																	public void actionPerformed(ActionEvent e) {
-																		controller.addinnercolor();
-																		getTglbtnInnerColor().setSelected(false);
-																	}
-																});
-																tglbtnInnerColor.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
-																tglbtnInnerColor.setEnabled(true);
-																tglbtnNOuterColor.setForeground(new Color(244, 164, 96));
-																panel_1.add(tglbtnNOuterColor);
-																tglbtnNOuterColor.setBackground(new Color(245, 245, 220));
-																
-																tglbtnNOuterColor.addActionListener(new ActionListener() {
-																	public void actionPerformed(ActionEvent e) {
-																		controller.addOuterColor();
-																		getTglbtnNOuterColor().setSelected(false);
-
-																	}
-																});
-																tglbtnNOuterColor.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
-						
-								btnRedo.addActionListener(new ActionListener() {
-									public void actionPerformed(ActionEvent e) {
-										controller.redo();
-									}
-								});
-						
-								btnUndo.addActionListener(new ActionListener() {
-									public void actionPerformed(ActionEvent e) {
-										controller.undo();
-									}
-								});
-						
-								btnBringToBack.addActionListener(new ActionListener() {
-									public void actionPerformed(ActionEvent e) {
-										controller.toBack();
-									}
-								});
-						
-								btnBringToFront.addActionListener(new ActionListener() {
-									public void actionPerformed(ActionEvent e) {
-										controller.toFront();
-									}
-								});
-						
-								btnToBack.addActionListener(new ActionListener() {
-									public void actionPerformed(ActionEvent e) {
-										controller.back();
-									}
-								});
-						
-								btnToFront.addActionListener(new ActionListener() {
-									public void actionPerformed(ActionEvent e) {
-										controller.front();
-									}
-								});
 
 	}
 
@@ -489,5 +532,22 @@ public class DrawingFrame extends JFrame{
 
 	public void setBtnNext(JButton btnNext) {
 		this.btnNext = btnNext;
+	}
+	private static void addPopup(Component component, final JPopupMenu popup) {
+		component.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			private void showMenu(MouseEvent e) {
+				popup.show(e.getComponent(), e.getX(), e.getY());
+			}
+		});
 	}
 }

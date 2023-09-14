@@ -10,6 +10,10 @@ import hexagon.Hexagon;
 
 public class HexagonAdapter extends Shape implements Moveable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	Hexagon newHexagon = new Hexagon(0,0,0);
 	
 	
@@ -19,36 +23,36 @@ public class HexagonAdapter extends Shape implements Moveable{
 	}
 	
 	public HexagonAdapter(Point point) {
-		newHexagon.setX(point.getX());
-		newHexagon.setY(point.getY());
+		this.newHexagon.setX(point.getX());
+		this.newHexagon.setY(point.getY());
 	}
 	
 	public HexagonAdapter(Point point, int radius) {
-		newHexagon.setX(point.getX());
-		newHexagon.setY(point.getY());
-		newHexagon.setR(radius);
+		this.newHexagon.setX(point.getX());
+		this.newHexagon.setY(point.getY());
+		this.newHexagon.setR(radius);
 	}
 	public HexagonAdapter(Point point, int radius, Color color, boolean isSelected) {
-		newHexagon.setX(point.getX());
-		newHexagon.setY(point.getY());
-		newHexagon.setR(radius);
-		newHexagon.setSelected(isSelected);
-		newHexagon.setAreaColor(color);
+		this.newHexagon.setX(point.getX());
+		this.newHexagon.setY(point.getY());
+		this.newHexagon.setR(radius);
+		this.newHexagon.setSelected(isSelected);
+		this.newHexagon.setAreaColor(color);
 	}
 	public HexagonAdapter(Point point, int radius, Color innerColor, Color borderColor) {
-		newHexagon.setX(point.getX());
-		newHexagon.setY(point.getY());
-		newHexagon.setR(radius);
-		newHexagon.setAreaColor(innerColor);
-		newHexagon.setBorderColor(borderColor);
+		this.newHexagon.setX(point.getX());
+		this.newHexagon.setY(point.getY());
+		this.newHexagon.setR(radius);
+		this.newHexagon.setAreaColor(innerColor);
+		this.newHexagon.setBorderColor(borderColor);
 	}
 	public HexagonAdapter(Point point, int radius, boolean isSelected, Color innerColor, Color borderColor) {
-		newHexagon.setX(point.getX());
-		newHexagon.setY(point.getY());
-		newHexagon.setR(radius);
-		newHexagon.setSelected(isSelected);
-		newHexagon.setAreaColor(innerColor);
-		newHexagon.setBorderColor(borderColor);
+		this.newHexagon.setX(point.getX());
+		this.newHexagon.setY(point.getY());
+		this.newHexagon.setR(radius);
+		this.newHexagon.setSelected(isSelected);
+		this.newHexagon.setAreaColor(innerColor);
+		this.newHexagon.setBorderColor(borderColor);
 	}
 	@Override
 	public void moveTo(int x, int y) {
@@ -87,9 +91,9 @@ public class HexagonAdapter extends Shape implements Moveable{
 			g.setColor(Color.BLUE);
 			g.drawRect(this.newHexagon.getX()-3, this.newHexagon.getY()-3, 6,6);
 			g.drawRect(this.newHexagon.getX()-this.newHexagon.getR()-3, this.newHexagon.getY()-3, 6,6);
-			g.drawRect(this.newHexagon.getX()+this.newHexagon.getR()-3, this.newHexagon.getR()-3, 6,6);
+			g.drawRect(this.newHexagon.getX()+this.newHexagon.getR()-3, this.newHexagon.getY()-3, 6,6);
 			g.drawRect(this.newHexagon.getX()-3, this.newHexagon.getY()-this.newHexagon.getR()-3, 6,6);
-			g.drawRect(this.newHexagon.getX()-3,  this.newHexagon.getY()-this.newHexagon.getR()+3, 6,6);
+			g.drawRect(this.newHexagon.getX()-3,  this.newHexagon.getY()+this.newHexagon.getR()-3, 6,6);
 		}
 	}
 	@Override
@@ -151,5 +155,5 @@ public class HexagonAdapter extends Shape implements Moveable{
 		
 		return hex;
 	}
-
+	
 }

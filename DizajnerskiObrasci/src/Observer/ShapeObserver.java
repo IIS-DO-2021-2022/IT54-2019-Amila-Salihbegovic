@@ -34,34 +34,34 @@ public class ShapeObserver implements PropertyChangeListener{
 	}
 	
 	public void showButtons() {
-		if(listSize==0) {
-			frame.getBtnDelete().setEnabled(false);
-			frame.getBtnModify().setEnabled(false);
-			frame.getBtnBringToFront().setEnabled(false);
-			frame.getBtnBringToBack().setEnabled(false);
-			frame.getBtnToFront().setEnabled(false);
-			frame.getBtnToBack().setEnabled(false);
-		}
-		if(listSize==1) {
-			frame.getBtnDelete().setEnabled(true);
-			frame.getBtnModify().setEnabled(true);
-			if(index>0) {
-				frame.getBtnBringToBack().setEnabled(true);
-				frame.getBtnToBack().setEnabled(true);
-			}
-			if(index<shapeSize-1) {
-				frame.getBtnToFront().setEnabled(true);
-				frame.getBtnBringToFront().setEnabled(true);
+	    frame.getTglbtnSelect().setEnabled(false);
+	    frame.getBtnDelete().setEnabled(false);
+	    frame.getBtnModify().setEnabled(false);
+	    frame.getBtnBringToFront().setEnabled(false);
+	    frame.getBtnBringToBack().setEnabled(false);
+	    frame.getBtnToFront().setEnabled(false);
+	    frame.getBtnToBack().setEnabled(false);
 
-			}
-		}
-		if(listSize>1) {
-			frame.getBtnDelete().setEnabled(true);
-			frame.getBtnModify().setEnabled(false);
-			frame.getBtnBringToFront().setEnabled(false);
-			frame.getBtnBringToBack().setEnabled(false);
-			frame.getBtnToFront().setEnabled(false);
-			frame.getBtnToBack().setEnabled(false);
-		}
+	    switch (listSize) {
+	        case 1:
+	            frame.getBtnDelete().setEnabled(true);
+	            frame.getBtnModify().setEnabled(true);
+
+	            if (index > 0) {
+	                frame.getBtnBringToBack().setEnabled(true);
+	                frame.getBtnToBack().setEnabled(true);
+	            }
+
+	            if (index < shapeSize - 1) {
+	                frame.getBtnToFront().setEnabled(true);
+	                frame.getBtnBringToFront().setEnabled(true);
+	            }
+	            break;
+	        case 0:
+	            break;
+	        default:
+	            frame.getBtnDelete().setEnabled(true);
+	            break;
+	    }
 	}
 }

@@ -20,14 +20,14 @@ public class BringToBackCommand implements Command{
 	@Override
 	public void execute() {
 		drawingModel.getShapes().remove(i);
-		drawingModel.addOnIndex(0, shape);
+		drawingModel.getShapes().add(0, shape);
 		
 	}
 
 	@Override
 	public void unexecute() {
 		drawingModel.getShapes().remove(0);
-		drawingModel.addOnIndex(i, shape);
+		drawingModel.getShapes().add(i, shape);
 		
 	}
 

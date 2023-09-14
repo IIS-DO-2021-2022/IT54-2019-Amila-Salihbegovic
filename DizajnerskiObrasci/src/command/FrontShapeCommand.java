@@ -20,17 +20,16 @@ public class FrontShapeCommand implements Command{
 
 	@Override
 	public void execute() {
-		int length = model.getShapes().size();
-		if(i!=length) {
-			model.getShapes().remove(i);
-			model.addOnIndex(i+1, shape);
+		if(i!=model.getShapes().size()-1) {
+			Collections.swap(model.getShapes(), i+1, i);
 		}
 	}
 
 	@Override
 	public void unexecute() {
-		model.getShapes().remove(i+1);
-		model.addOnIndex(i, shape);
+		if(i!=model.getShapes().size()-1) {
+			Collections.swap(model.getShapes(), i, i+1);
+		}
 	}
 	@Override
 	public String toString() {

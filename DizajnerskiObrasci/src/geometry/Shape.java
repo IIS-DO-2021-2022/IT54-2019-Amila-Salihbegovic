@@ -35,5 +35,6 @@ public abstract class Shape implements Moveable, Comparable, Cloneable,Serializa
 	public void setColor(Color color) {
 		this.color = color;
 	}
+	
 
 }

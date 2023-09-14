@@ -127,5 +127,9 @@ public class Point extends Shape{
 		
 		return point;
 	}
-
+	public void setPropertiesFrom(Point newState) {
+		this.setX(newState.getX());
+		this.setY(newState.getY());
+		this.setColor(newState.getColor());
+	}
 }

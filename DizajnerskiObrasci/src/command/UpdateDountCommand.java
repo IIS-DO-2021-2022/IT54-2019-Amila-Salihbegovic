@@ -20,33 +20,12 @@ public class UpdateDountCommand implements Command{
 	@Override
 	public void execute() {
 		oldState = donut.clone();
-		
-		donut.setcenter(newDonut.getcenter());
-		try {
-			donut.setradius(newDonut.getradius());
-		}catch(Exception e) {
-			throw new NumberFormatException("An error occured."+e);
-		}
-		donut.setColor(newDonut.getColor());
-		donut.setInnerRadius(newDonut.getInnerRadius());
-		donut.setInnerColor(newDonut.getInnerColor());
-		donut.setSelected(newDonut.isSelected());
-		
+		donut.setPropertiesFrom(newDonut);	
 	}
 
 	@Override
 	public void unexecute() {
-		donut.setcenter(oldState.getcenter());
-		try {
-			donut.setradius(oldState.getradius());
-		}catch(Exception e) {
-			throw new NumberFormatException("An error occured."+e);
-		}
-		donut.setColor(oldState.getColor());
-		donut.setInnerRadius(oldState.getInnerRadius());
-		donut.setInnerColor(oldState.getInnerColor());
-		donut.setSelected(oldState.isSelected());
-		
+		donut.setPropertiesFrom(oldState);
 	}
 
 }

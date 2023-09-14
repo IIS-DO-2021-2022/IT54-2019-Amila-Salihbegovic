@@ -143,4 +143,13 @@ public class Rectangle extends Shape {
 		
 		return rectangle;
 	}
+	 public void setPropertiesFrom(Rectangle otherRectangle) {
+	        this.setupperletf(otherRectangle.getupperleft());
+	        this.setheight(otherRectangle.getheight());
+	        this.setwidth(otherRectangle.getwidth());
+	        this.setColor(otherRectangle.getColor());
+	        this.setInnerColor(otherRectangle.getInnerColor());
+	        this.setSelected(otherRectangle.isSelected());
+	    }
+
 }
