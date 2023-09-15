@@ -88,12 +88,12 @@ public class HexagonAdapter extends Shape implements Moveable{
 	public void draw(Graphics g) {
 		newHexagon.paint(g);
 		if(isSelected()) {
-			g.setColor(Color.BLUE);
-			g.drawRect(this.newHexagon.getX()-3, this.newHexagon.getY()-3, 6,6);
-			g.drawRect(this.newHexagon.getX()-this.newHexagon.getR()-3, this.newHexagon.getY()-3, 6,6);
-			g.drawRect(this.newHexagon.getX()+this.newHexagon.getR()-3, this.newHexagon.getY()-3, 6,6);
-			g.drawRect(this.newHexagon.getX()-3, this.newHexagon.getY()-this.newHexagon.getR()-3, 6,6);
-			g.drawRect(this.newHexagon.getX()-3,  this.newHexagon.getY()+this.newHexagon.getR()-3, 6,6);
+			g.setColor(Color.RED);
+			g.drawRect(this.newHexagon.getX()-3, this.newHexagon.getY()-3, 3,3);
+			g.drawRect(this.newHexagon.getX()-this.newHexagon.getR()-3, this.newHexagon.getY()-3, 3,3);
+			g.drawRect(this.newHexagon.getX()+this.newHexagon.getR()-3, this.newHexagon.getY()-3, 3,3);
+			g.drawRect(this.newHexagon.getX()-3, this.newHexagon.getY()-this.newHexagon.getR()-3, 3,3);
+			g.drawRect(this.newHexagon.getX()-3,  this.newHexagon.getY()+this.newHexagon.getR()-3, 3,3);
 		}
 	}
 	@Override
@@ -126,16 +126,10 @@ public class HexagonAdapter extends Shape implements Moveable{
 		// TODO Auto-generated method stub
 		
 	}
-//	@Override
-//	public String toString() {
-//		return String.format("Hexagon(X=%d,Y=%d,r=%d,outercolor=[%d-%d-%d],innercolor=[%d-%d-%d],selected=%b)", this.newHexagon.getX(),
-//				this.newHexagon.getY(), this.newHexagon.getR(), getColor().getRed(), getColor().getGreen(), getColor().getBlue(),
-//				getInnerColor().getRed(), getInnerColor().getGreen(), getInnerColor().getBlue(),isSelected());
-//	}
 	@Override
 	public String toString() {
 		return "Hexagon: center: " + getNewHexagon().getX() + " " + getNewHexagon().getY() + " radius: " + getNewHexagon().getR()
-				+ " area_color: " + getNewHexagon().getAreaColor().getRGB() + " line_color: "
+				+ " area_color: " + getNewHexagon().getAreaColor().getRGB() + " border_color: "
 				+ getNewHexagon().getBorderColor().getRGB();
 	}
 	@Override
@@ -155,5 +149,14 @@ public class HexagonAdapter extends Shape implements Moveable{
 		
 		return hex;
 	}
-	
+	 public void setParametersFrom(HexagonAdapter otherHexagon) {
+	        if (otherHexagon != null) {
+	            this.newHexagon.setX(otherHexagon.newHexagon.getX());
+	            this.newHexagon.setY(otherHexagon.newHexagon.getY());
+	            this.newHexagon.setR(otherHexagon.newHexagon.getR());
+	            this.selected = otherHexagon.selected;
+	            this.newHexagon.setBorderColor(otherHexagon.newHexagon.getBorderColor());
+	            this.newHexagon.setAreaColor(otherHexagon.newHexagon.getAreaColor());
+	        }
+	    }
 }

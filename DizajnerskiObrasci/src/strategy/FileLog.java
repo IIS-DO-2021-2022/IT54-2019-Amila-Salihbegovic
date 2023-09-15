@@ -28,10 +28,8 @@ public class FileLog implements FileChooser {
         File file = new File(path);
 
         try {
-            // Deselect all shapes before saving
             deselectAllShapes();
 
-            // Write the shapes to the file
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(file));
             objectOutputStream.writeObject(model.getShapes());
             objectOutputStream.close();

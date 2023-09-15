@@ -34,7 +34,6 @@ public class ShapeObserver implements PropertyChangeListener{
 	}
 	
 	public void showButtons() {
-	    frame.getTglbtnSelect().setEnabled(false);
 	    frame.getBtnDelete().setEnabled(false);
 	    frame.getBtnModify().setEnabled(false);
 	    frame.getBtnBringToFront().setEnabled(false);
@@ -42,26 +41,22 @@ public class ShapeObserver implements PropertyChangeListener{
 	    frame.getBtnToFront().setEnabled(false);
 	    frame.getBtnToBack().setEnabled(false);
 
-	    switch (listSize) {
-	        case 1:
-	            frame.getBtnDelete().setEnabled(true);
+	    if (listSize > 0) {
+	        frame.getBtnDelete().setEnabled(true);
+
+	        if (listSize == 1) {
 	            frame.getBtnModify().setEnabled(true);
+	        }
 
-	            if (index > 0) {
-	                frame.getBtnBringToBack().setEnabled(true);
-	                frame.getBtnToBack().setEnabled(true);
-	            }
+	        if (index > 0) {
+	            frame.getBtnBringToBack().setEnabled(true);
+	            frame.getBtnToBack().setEnabled(true);
+	        }
 
-	            if (index < shapeSize - 1) {
-	                frame.getBtnToFront().setEnabled(true);
-	                frame.getBtnBringToFront().setEnabled(true);
-	            }
-	            break;
-	        case 0:
-	            break;
-	        default:
-	            frame.getBtnDelete().setEnabled(true);
-	            break;
+	        if (index < shapeSize - 1) {
+	            frame.getBtnToFront().setEnabled(true);
+	            frame.getBtnBringToFront().setEnabled(true);
+	        }
 	    }
 	}
 }

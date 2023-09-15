@@ -50,12 +50,12 @@ public class Donut extends Circle {
 		g2d.draw(area);
 		
 		if (isSelected()) {
-			g2d.setColor(Color.BLUE);
-			g2d.drawRect(this.getcenter().getX() - 3, this.getcenter().getY() - 3, 6, 6);
-			g2d.drawRect(this.getcenter().getX() - this.getradius() - 3, this.getcenter().getY() - 3, 6, 6);
-			g2d.drawRect(this.getcenter().getX() + this.getradius() - 3, this.getcenter().getY() - 3, 6, 6);
-			g2d.drawRect(this.getcenter().getX()- 3, this.getcenter().getY() - this.getradius()- 3, 6, 6);
-			g2d.drawRect(this.getcenter().getX()- 3,this.getcenter().getY()+ this.getradius()- 3, 6, 6);
+			g2d.setColor(Color.RED);
+			g2d.drawRect(this.getcenter().getX() - 3, this.getcenter().getY() - 3, 3, 3);
+			g2d.drawRect(this.getcenter().getX() - this.getradius() - 3, this.getcenter().getY() - 3, 3, 3);
+			g2d.drawRect(this.getcenter().getX() + this.getradius() - 3, this.getcenter().getY() - 3, 3, 3);
+			g2d.drawRect(this.getcenter().getX()- 3, this.getcenter().getY() - this.getradius()- 3, 3, 3);
+			g2d.drawRect(this.getcenter().getX()- 3,this.getcenter().getY()+ this.getradius()- 3, 3, 3);
 		}
 	}
 	@Override

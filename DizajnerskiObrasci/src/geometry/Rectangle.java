@@ -58,11 +58,11 @@ public class Rectangle extends Shape {
 		this.fill(g);
 		
 		if (isSelected()) {
-			g.setColor(Color.BLUE);
-			g.drawRect(getupperleft().getX() - 3, getupperleft().getY() - 3, 6, 6);
-			g.drawRect(getupperleft().getX() + getwidth() - 3, getupperleft().getY() - 3, 6, 6);
-			g.drawRect(getupperleft().getX() - 3, getupperleft().getY() + getheight() - 3, 6, 6);
-			g.drawRect(getupperleft().getX() + getwidth() - 3, getupperleft().getY() + getheight() - 3, 6, 6);
+			g.setColor(Color.RED);
+			g.drawRect(getupperleft().getX() - 3, getupperleft().getY() - 3, 3, 3);
+			g.drawRect(getupperleft().getX() + getwidth() - 3, getupperleft().getY() - 3, 3, 3);
+			g.drawRect(getupperleft().getX() - 3, getupperleft().getY() + getheight() - 3, 3, 3);
+			g.drawRect(getupperleft().getX() + getwidth() - 3, getupperleft().getY() + getheight() - 3, 3, 3);
 		}
 
 	}

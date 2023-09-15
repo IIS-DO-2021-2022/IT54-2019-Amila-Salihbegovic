@@ -39,7 +39,6 @@ public class RemoveShapeCommand implements Command {
             Shape shape = entry.getKey();
             int position = entry.getValue();
 
-            // Ensure the position is valid
             if (position >= 0 && position <= drawingModel.getShapes().size()) {
                 drawingModel.getShapes().add(position, shape);
                 shape.setSelected(true);

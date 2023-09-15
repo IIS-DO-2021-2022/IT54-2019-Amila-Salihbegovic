@@ -60,7 +60,6 @@ public class DrawingFrame extends JFrame{
 	private final JButton btnToFront = new JButton("To Front");
 	private final JButton btnBringToFront = new JButton("Bring To Front");
 	private final JButton btnBringToBack = new JButton("Bring To Back");
-	private final JLabel lblNewLabel_2 = new JLabel("Commands:");
 	private final JTextArea textArea = new JTextArea();
 	private final JScrollPane scrollPane = new JScrollPane(textArea);
 	private JButton btnNext;
@@ -71,6 +70,7 @@ public class DrawingFrame extends JFrame{
 	private final JMenu mnNewMenu = new JMenu("Shapes");
 	private final JMenu mnNewMenu_1 = new JMenu("Colors");
 	private final JMenu mnNewMenu_2 = new JMenu("Commands");
+	private final JMenu mnNewMenu_3 = new JMenu("Save/Load");
 	
 
 	public DrawingFrame() {
@@ -91,9 +91,10 @@ public class DrawingFrame extends JFrame{
 		setBounds(300, 300, 900, 800);
 		setResizable(true);
 		ButtonGroup btnGroup = new ButtonGroup();
-		menuBar.setBackground(Color.BLACK);
+		menuBar.setBackground(new Color(255, 255, 255));
 		setJMenuBar(menuBar);
-				mnNewMenu.setForeground(Color.BLUE);
+				mnNewMenu.setAlignmentY(Component.TOP_ALIGNMENT);
+				mnNewMenu.setForeground(SystemColor.textHighlight);
 				mnNewMenu.setFont(new Font("Sitka Heading", Font.BOLD, 15));
 				
 				menuBar.add(mnNewMenu);
@@ -134,7 +135,8 @@ public class DrawingFrame extends JFrame{
 						tglbtnHexagon.setBackground(new Color(255, 255, 240));
 						tglbtnHexagon.setForeground(Color.BLUE);
 						tglbtnHexagon.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
-						mnNewMenu_1.setForeground(Color.BLUE);
+						mnNewMenu_1.setAlignmentY(Component.TOP_ALIGNMENT);
+						mnNewMenu_1.setForeground(SystemColor.textHighlight);
 						mnNewMenu_1.setFont(new Font("Sitka Heading", Font.BOLD, 15));
 						
 						menuBar.add(mnNewMenu_1);
@@ -164,7 +166,8 @@ public class DrawingFrame extends JFrame{
 															}
 														});
 														tglbtnNOuterColor.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
-														mnNewMenu_2.setForeground(Color.BLUE);
+														mnNewMenu_2.setAlignmentY(Component.TOP_ALIGNMENT);
+														mnNewMenu_2.setForeground(SystemColor.textHighlight);
 														mnNewMenu_2.setFont(new Font("Sitka Heading", Font.BOLD, 15));
 														
 														menuBar.add(mnNewMenu_2);
@@ -229,6 +232,65 @@ public class DrawingFrame extends JFrame{
 																		btnBringToBack.setForeground(Color.BLUE);
 																		btnBringToBack.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
 																		btnBringToBack.setEnabled(false);
+																		mnNewMenu_3.setAlignmentY(Component.TOP_ALIGNMENT);
+																		mnNewMenu_3.setForeground(SystemColor.textHighlight);
+																		mnNewMenu_3.setFont(new Font("Sitka Heading", Font.BOLD, 15));
+																		
+																		menuBar.add(mnNewMenu_3);
+																		
+																				JButton btnSaveCommands = new JButton("Save Commands");
+																				btnSaveCommands.setMaximumSize(new Dimension(200, 21));
+																				mnNewMenu_3.add(btnSaveCommands);
+																				btnSaveCommands.setBackground(SystemColor.menu);
+																				btnSaveCommands.setForeground(Color.BLUE);
+																				btnSaveCommands.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
+																				btnSaveCommands.setEnabled(true);
+																				
+																						JButton btnLoadCommands = new JButton("Load Commands");
+																						mnNewMenu_3.add(btnLoadCommands);
+																						btnLoadCommands.setBackground(SystemColor.menu);
+																						btnLoadCommands.setForeground(Color.BLUE);
+																						btnLoadCommands.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
+																						btnLoadCommands.setEnabled(true);
+																						
+																								JButton btnSaveDrawing = new JButton("Save Drawing");
+																								btnSaveDrawing.setMaximumSize(new Dimension(200, 21));
+																								mnNewMenu_3.add(btnSaveDrawing);
+																								btnSaveDrawing.setForeground(Color.BLUE);
+																								btnSaveDrawing.setBackground(SystemColor.menu);
+																								btnSaveDrawing.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
+																								btnSaveDrawing.setEnabled(true);
+																								
+																										JButton btnLoadDrawing = new JButton("Load Drawing");
+																										btnLoadDrawing.setMaximumSize(new Dimension(200, 21));
+																										mnNewMenu_3.add(btnLoadDrawing);
+																										btnLoadDrawing.setForeground(Color.BLUE);
+																										btnLoadDrawing.setBackground(SystemColor.menu);
+																										btnLoadDrawing.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
+																										btnLoadDrawing.setEnabled(true);
+																										btnLoadDrawing.addActionListener(new ActionListener() {
+																											public void actionPerformed(ActionEvent e) {
+																												controller.loadDrawing();
+																											}
+																										});
+																								
+																										btnSaveDrawing.addActionListener(new ActionListener() {
+																											public void actionPerformed(ActionEvent e) {
+																												controller.saveDrawing();
+																											}
+																										});
+																						
+																								btnLoadCommands.addActionListener(new ActionListener() {
+																									public void actionPerformed(ActionEvent e) {
+																										controller.loadCommands();
+																									}
+																								});
+																				
+																						btnSaveCommands.addActionListener(new ActionListener() {
+																							public void actionPerformed(ActionEvent e) {
+																								controller.saveCommands();
+																							}
+																						});
 																		
 																				btnBringToBack.addActionListener(new ActionListener() {
 																					public void actionPerformed(ActionEvent e) {
@@ -266,147 +328,70 @@ public class DrawingFrame extends JFrame{
 		JPanel pnlEast = new JPanel();
 		pnlEast.setAlignmentY(0.0f);
 		pnlEast.setAlignmentX(0.0f);
-		pnlEast.setBackground(Color.BLACK);
+		pnlEast.setBackground(new Color(255, 255, 255));
 		pnlEast.setForeground(new Color(191, 205, 219));
 		contentPane.add(pnlEast, BorderLayout.EAST);
 		GridBagLayout gbl_pnlEast = new GridBagLayout();
-		gbl_pnlEast.columnWidths = new int[] { 246, 0 };
-		gbl_pnlEast.rowHeights = new int[] { 150, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		gbl_pnlEast.columnWidths = new int[] { 172, 0 };
+		gbl_pnlEast.rowHeights = new int[] { 208, 0, 0, 0 };
 		gbl_pnlEast.columnWeights = new double[] { 0.0, Double.MIN_VALUE };
-		gbl_pnlEast.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+		gbl_pnlEast.rowWeights = new double[] { 0.0, 0.0, 0.0,
 				Double.MIN_VALUE };
 		pnlEast.setLayout(gbl_pnlEast);
-		textArea.setAlignmentY(0.0f);
-		textArea.setAlignmentX(0.0f);
-		textArea.setBackground(new Color(230, 230, 250));
-		textArea.setTabSize(40);
-		textArea.setColumns(30);
-		textArea.setRows(8);
-		textArea.setSize(60, 50);
-		textArea.setEditable(false);
-
-		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
-		gbc_scrollPane.insets = new Insets(0, 0, 5, 0);
-		gbc_scrollPane.anchor = GridBagConstraints.NORTHWEST;
-		gbc_scrollPane.gridx = 0;
-		gbc_scrollPane.gridy = 0;
-		pnlEast.add(scrollPane, gbc_scrollPane);
-				
-						JButton btnSaveCommands = new JButton("Save Commands");
-						btnSaveCommands.setBackground(SystemColor.menu);
-						btnSaveCommands.setForeground(Color.BLUE);
-						btnSaveCommands.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
-						btnSaveCommands.setEnabled(true);
-						GridBagConstraints gbc_btnSaveCommands = new GridBagConstraints();
-						gbc_btnSaveCommands.insets = new Insets(0, 0, 5, 0);
-						gbc_btnSaveCommands.gridx = 0;
-						gbc_btnSaveCommands.gridy = 4;
-						pnlEast.add(btnSaveCommands, gbc_btnSaveCommands);
+								textArea.setAlignmentY(0.0f);
+								textArea.setAlignmentX(0.0f);
+								textArea.setBackground(new Color(255, 255, 255));
+								textArea.setTabSize(40);
+								textArea.setColumns(30);
+								textArea.setRows(8);
+								textArea.setSize(60, 50);
+								textArea.setEditable(false);
+								
+										GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+										gbc_scrollPane.insets = new Insets(0, 0, 5, 0);
+										gbc_scrollPane.anchor = GridBagConstraints.NORTHWEST;
+										gbc_scrollPane.gridx = 0;
+										gbc_scrollPane.gridy = 0;
+										scrollPane.setAlignmentY(Component.TOP_ALIGNMENT);
+										pnlEast.add(scrollPane, gbc_scrollPane);
 						
-								btnSaveCommands.addActionListener(new ActionListener() {
-									public void actionPerformed(ActionEvent e) {
-										controller.saveCommands();
-									}
-								});
-		
-				JButton btnLoadCommands = new JButton("Load Commands");
-				btnLoadCommands.setBackground(SystemColor.menu);
-				btnLoadCommands.setForeground(Color.BLUE);
-				btnLoadCommands.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
-				btnLoadCommands.setEnabled(true);
-				GridBagConstraints gbc_btnLoadCommands = new GridBagConstraints();
-				gbc_btnLoadCommands.insets = new Insets(0, 0, 5, 0);
-				gbc_btnLoadCommands.gridx = 0;
-				gbc_btnLoadCommands.gridy = 5;
-				pnlEast.add(btnLoadCommands, gbc_btnLoadCommands);
-				
-						btnLoadCommands.addActionListener(new ActionListener() {
-							public void actionPerformed(ActionEvent e) {
-								controller.loadCommands();
-							}
-						});
-
-		btnNext = new JButton("Next");
-		btnNext.setBackground(SystemColor.menu);
-		btnNext.setForeground(Color.BLUE);
-		btnNext.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
-		GridBagConstraints gbc_btnNext = new GridBagConstraints();
-		btnNext.setEnabled(false);
-		gbc_btnNext.insets = new Insets(0, 0, 5, 0);
-		gbc_btnNext.gridx = 0;
-		gbc_btnNext.gridy = 6;
-		pnlEast.add(btnNext, gbc_btnNext);
-		
-				JButton btnSaveDrawing = new JButton("Save Drawing");
-				btnSaveDrawing.setForeground(Color.BLUE);
-				btnSaveDrawing.setBackground(SystemColor.menu);
-				btnSaveDrawing.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
-				btnSaveDrawing.setEnabled(true);
-				GridBagConstraints gbc_btnSaveDrawing = new GridBagConstraints();
-				gbc_btnSaveDrawing.insets = new Insets(0, 0, 5, 0);
-				gbc_btnSaveDrawing.gridx = 0;
-				gbc_btnSaveDrawing.gridy = 7;
-				pnlEast.add(btnSaveDrawing, gbc_btnSaveDrawing);
-				
-						btnSaveDrawing.addActionListener(new ActionListener() {
-							public void actionPerformed(ActionEvent e) {
-								controller.saveDrawing();
-							}
-						});
-		
-				JButton btnLoadDrawing = new JButton("Load Drawing");
-				btnLoadDrawing.setForeground(Color.BLUE);
-				btnLoadDrawing.setBackground(SystemColor.menu);
-				btnLoadDrawing.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
-				btnLoadDrawing.setEnabled(true);
-				GridBagConstraints gbc_btnLoadDrawing = new GridBagConstraints();
-				gbc_btnLoadDrawing.insets = new Insets(0, 0, 5, 0);
-				gbc_btnLoadDrawing.gridx = 0;
-				gbc_btnLoadDrawing.gridy = 8;
-				pnlEast.add(btnLoadDrawing, gbc_btnLoadDrawing);
-				GridBagConstraints gbc_btnUndo = new GridBagConstraints();
-				gbc_btnUndo.insets = new Insets(0, 0, 5, 0);
-				gbc_btnUndo.gridx = 0;
-				gbc_btnUndo.gridy = 10;
-				pnlEast.add(btnUndo, gbc_btnUndo);
-				btnUndo.setBackground(SystemColor.menu);
-				btnUndo.setForeground(Color.BLUE);
-				btnUndo.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
-				btnUndo.setEnabled(true);
-				btnGroup.add(btnUndo);
-				GridBagConstraints gbc_btnRedo = new GridBagConstraints();
-				gbc_btnRedo.gridx = 0;
-				gbc_btnRedo.gridy = 11;
-				btnRedo.setBackground(SystemColor.menu);
-				pnlEast.add(btnRedo, gbc_btnRedo);
-				btnRedo.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
-				btnRedo.setEnabled(true);
-				btnRedo.setForeground(Color.BLUE);
-				btnGroup.add(btnRedo);
-				
-						btnRedo.addActionListener(new ActionListener() {
-							public void actionPerformed(ActionEvent e) {
-								controller.redo();
-							}
-						});
-				
-						btnUndo.addActionListener(new ActionListener() {
-							public void actionPerformed(ActionEvent e) {
-								controller.undo();
-							}
-						});
-				btnLoadDrawing.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						controller.loadDrawing();
-					}
-				});
-		panel.setBackground(Color.BLACK);
+								btnNext = new JButton("Next");
+								btnNext.setBackground(SystemColor.menu);
+								btnNext.setForeground(Color.BLUE);
+								btnNext.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
+								GridBagConstraints gbc_btnNext = new GridBagConstraints();
+								btnNext.setEnabled(false);
+								gbc_btnNext.insets = new Insets(0, 0, 5, 0);
+								gbc_btnNext.gridx = 0;
+								gbc_btnNext.gridy = 1;
+								pnlEast.add(btnNext, gbc_btnNext);
+		panel.setBackground(new Color(255, 255, 255));
 		
 		contentPane.add(panel, BorderLayout.SOUTH);
-		panel.add(lblNewLabel_2);
-		lblNewLabel_2.setForeground(Color.BLACK);
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2.setFont(new Font("Sitka Heading", Font.BOLD, 12));
+		panel.add(btnUndo);
+		btnUndo.setBackground(new Color(255, 255, 255));
+		btnUndo.setForeground(Color.BLUE);
+		btnUndo.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
+		btnUndo.setEnabled(true);
+		btnGroup.add(btnUndo);
+		
+				btnUndo.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						controller.undo();
+					}
+				});
+		panel.add(btnRedo);
+		btnRedo.setBackground(new Color(255, 255, 255));
+		btnRedo.setFont(new Font("Lucida Bright", Font.PLAIN, 12));
+		btnRedo.setEnabled(true);
+		btnRedo.setForeground(Color.BLUE);
+		btnGroup.add(btnRedo);
+		
+				btnRedo.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						controller.redo();
+					}
+				});
 
 	}
 

@@ -51,19 +51,19 @@ public class Circle extends Shape {
 		g.drawOval(this.center.getX() - radius	, this.center.getY() - radius, radius*2, radius*2); 
 		this.fill(g);
 		if (isSelected()) {
-			g.setColor(Color.BLUE);
-			g.drawRect(this.center.getX() - 3, this.center.getY() - 3, 6, 6);
-			g.drawRect(this.center.getX() - radius - 3, this.center.getY() - 3, 6, 6);
-			g.drawRect(this.center.getX() + radius - 3, this.center.getY() - 3, 6, 6);
-			g.drawRect(this.center.getX() - 3, this.center.getY() - radius - 3, 6, 6);
-			g.drawRect(this.center.getX() - 3, this.center.getY() + radius - 3, 6, 6);
+			g.setColor(Color.RED);
+			g.drawRect(this.center.getX() - 3, this.center.getY() - 3, 3, 3);
+			g.drawRect(this.center.getX() - radius - 3, this.center.getY() - 3, 3, 3);
+			g.drawRect(this.center.getX() + radius - 3, this.center.getY() - 3, 3, 3);
+			g.drawRect(this.center.getX() - 3, this.center.getY() - radius - 3, 3, 3);
+			g.drawRect(this.center.getX() - 3, this.center.getY() + radius - 3, 3, 3);
 		}
 		
 	}
 	
 	@Override
 	public String toString() {
-		return "Circle:" + " center: "+ getcenter().getX() + " " + getcenter().getY()+" radius: "+getradius()+" color: "+getColor().getRGB() +" inner_color: "+getInnerColor().getRGB();
+		return "Circle:" + " center(x,y): "+ getcenter().getX() + " " + getcenter().getY()+" radius: "+getradius()+" color: "+getColor().getRGB() +" inner_color: "+getInnerColor().getRGB();
 	}
 	
 	@Override

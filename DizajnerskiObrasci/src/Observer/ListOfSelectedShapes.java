@@ -8,7 +8,6 @@ public class ListOfSelectedShapes {
 	private int listSize;
 	private PropertyChangeSupport changeSupport;
 	public ListOfSelectedShapes(PropertyChangeSupport changeSupport) {
-		super();
 		this.changeSupport = changeSupport;
 	}
 	public ListOfSelectedShapes() {

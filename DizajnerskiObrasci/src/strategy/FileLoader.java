@@ -6,7 +6,6 @@ public class FileLoader implements FileChooser{
 	
 	
 	public FileLoader(FileChooser fileChooser) {
-		super();
 		this.fileChooser = fileChooser;
 	}
 
