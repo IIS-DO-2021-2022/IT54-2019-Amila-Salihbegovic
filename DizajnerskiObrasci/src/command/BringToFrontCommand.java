@@ -27,7 +27,7 @@ public class BringToFrontCommand implements Command{
 	@Override
 	public void unexecute() {
 		drawingModel.getShapes().remove(shape);
-		drawingModel.getShapes().add(i, shape);
+		drawingModel.position(i, shape);
 	}
 
 }

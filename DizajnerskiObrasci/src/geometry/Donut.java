@@ -127,7 +127,7 @@ public class Donut extends Circle {
 	}
 
 	public String toString() {
-		return "Donut: " + super.toString() + " inner_radius: " + getInnerRadius();
+		return "Donut-> " + super.toString() + " inner_radius: " + getInnerRadius();
 	}
 	 public void setPropertiesFrom(Donut otherDonut) {
 	        this.setcenter(otherDonut.getcenter());

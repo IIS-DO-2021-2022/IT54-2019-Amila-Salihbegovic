@@ -54,7 +54,7 @@ public class Point extends Shape{
 	
 	@Override
 	public String toString() {
-		return "Point: " + getX()+" "+getY()+" "+ "color: " + getColor().getRGB();
+		return "Point-> (x,y): " + getX()+" "+getY()+" "+ "color: " + getColor().getRGB();
 	}
 	
 	@Override

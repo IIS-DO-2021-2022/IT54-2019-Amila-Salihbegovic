@@ -21,7 +21,7 @@ import adapter.HexagonAdapter;
 import geometry.Circle;
 import geometry.Point;
 
-public class DialogHexagon extends JDialog{
+public class DialogHexagon extends JDialog implements DialogShape{
 	private final JPanel contentPanel = new JPanel();
 
 	private JTextField txtX;
@@ -275,6 +275,20 @@ public class DialogHexagon extends JDialog{
 
 	public JPanel getContentPanel() {
 		return contentPanel;
+	}
+
+	@Override
+	public void setInnerColor(Color color) {
+		 if (color != null) {
+	            getBtnInnerColor().setBackground(color);
+	        }
+	}
+
+	@Override
+	public void setOuterColor(Color color) {
+		 if (color != null) {
+	            getBtnOutlineColor().setBackground(color);
+	        }
 	}
 
 }

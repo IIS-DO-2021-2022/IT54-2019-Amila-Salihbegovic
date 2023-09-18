@@ -127,7 +127,7 @@ public class Line extends Shape {
 
 	@Override
 	public String toString() {
-		return "Line: " + "start_point: " + getstartpoint().getX() + " " + getstartpoint().getY() + " " + "end_point: "
+		return "Line-> " + "startPoint(x,y): " + getstartpoint().getX() + " " + getstartpoint().getY() + " " + "endPoint(x,y): "
 				+ +getendpoint().getX() + " " + getendpoint().getY() + " color: " + color.getRGB();
 	}
 	 public void setPropertiesFrom(Line otherLine) {

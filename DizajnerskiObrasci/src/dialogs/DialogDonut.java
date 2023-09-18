@@ -21,7 +21,7 @@ import javax.swing.border.EmptyBorder;
 import geometry.Donut;
 import geometry.Point;
 
-public class DialogDonut extends JDialog{
+public class DialogDonut extends JDialog implements DialogShape{
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtX;
 	private JTextField txtY;
@@ -302,6 +302,20 @@ public class DialogDonut extends JDialog{
 
 	public void setTxtR(JTextField txtR) {
 		this.txtR = txtR;
+	}
+
+	@Override
+	public void setInnerColor(Color color) {
+		if (color != null) {
+            getBtnInnerColor().setBackground(color);
+        }
+	}
+
+	@Override
+	public void setOuterColor(Color color) {
+		 if (color != null) {
+	            getBtnOuterColor().setBackground(color);
+	        }
 	}
 	
 }

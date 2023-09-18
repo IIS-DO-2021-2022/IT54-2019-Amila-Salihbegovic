@@ -40,10 +40,9 @@ public class ShapeObserver implements PropertyChangeListener{
 	    frame.getBtnBringToBack().setEnabled(false);
 	    frame.getBtnToFront().setEnabled(false);
 	    frame.getBtnToBack().setEnabled(false);
-
+	   
 	    if (listSize > 0) {
 	        frame.getBtnDelete().setEnabled(true);
-
 	        if (listSize == 1) {
 	            frame.getBtnModify().setEnabled(true);
 	        }
@@ -53,7 +52,7 @@ public class ShapeObserver implements PropertyChangeListener{
 	            frame.getBtnToBack().setEnabled(true);
 	        }
 
-	        if (index < shapeSize - 1) {
+	        if (index < shapeSize-1) {
 	            frame.getBtnToFront().setEnabled(true);
 	            frame.getBtnBringToFront().setEnabled(true);
 	        }

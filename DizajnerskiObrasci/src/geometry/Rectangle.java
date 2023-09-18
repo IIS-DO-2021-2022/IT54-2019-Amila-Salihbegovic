@@ -75,7 +75,7 @@ public class Rectangle extends Shape {
 	
 	@Override
 	public String toString() {
-		return "Rectangle: Upper_left_point " + getupperleft().getX() + " "+ getupperleft().getY() +
+		return "Rectangle-> UpperPoint(x,y): " + getupperleft().getX() + " "+ getupperleft().getY() +
 				 " height: " + getheight() + " width: " + getwidth()+ " inner_color: " + getInnerColor().getRGB()
 				 +" outer_color: " + getColor().getRGB();
 	}

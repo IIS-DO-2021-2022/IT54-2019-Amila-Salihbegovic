@@ -21,7 +21,7 @@ import javax.swing.border.EmptyBorder;
 import geometry.Point;
 import geometry.Rectangle;
 
-public class DialogRectangle  extends JDialog{
+public class DialogRectangle  extends JDialog implements DialogShape{
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtX;
@@ -299,5 +299,19 @@ public class DialogRectangle  extends JDialog{
 
 	public void setBtnOutlineColor(JButton btnOutlineColor) {
 		this.btnOutlineColor = btnOutlineColor;
+	}
+
+	@Override
+	public void setInnerColor(Color color) {
+		if (color != null) {
+            getBtnInnerColor().setBackground(color);
+        }
+	}
+
+	@Override
+	public void setOuterColor(Color color) {
+		if (color != null) {
+            getBtnOutlineColor().setBackground(color);
+        }
 	}
 }

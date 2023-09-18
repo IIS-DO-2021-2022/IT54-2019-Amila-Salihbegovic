@@ -41,15 +41,15 @@ public class DrawingModel {
 	
 	public void addSelected(Shape p) {
 		support.firePropertyChange("Size", this.selectedShapes.size(), this.selectedShapes.size()+1);
-		selectedShapes.add(p);
-		support.firePropertyChange("Index", getShapes().size(), getShapes().indexOf(p));	
+		support.firePropertyChange("Index", getShapes().size(), getShapes().indexOf(p));
+		selectedShapes.add(p);		
 	}
 	public void removeSelected(Shape p) {
 		support.firePropertyChange("Size", this.selectedShapes.size(), this.selectedShapes.size()-1);
 		support.firePropertyChange("Index", getShapes().size()-1, getShapes().indexOf(p));
 		selectedShapes.remove(p);
 	}
-	public void addOnIndex(int index, Shape s) {
+	public void position(int index, Shape s) {
 
 		shapes.add(index, s);
 		support.firePropertyChange("Index", getShapes().size(), index);
