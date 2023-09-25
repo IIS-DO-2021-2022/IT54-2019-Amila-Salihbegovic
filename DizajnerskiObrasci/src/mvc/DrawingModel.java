@@ -1,57 +1,29 @@
 package mvc;
 
-import java.io.Serializable;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
-import geometricShapes.Point;
 import geometricShapes.Shape;
 
-public class DrawingModel implements Serializable {
-	
-	private static final long serialVersionUID = 1L;
-	public List<Shape> shapes = new ArrayList<Shape>();
+public class DrawingModel {
 	private ArrayList<Shape> selectedShapes = new ArrayList<Shape>();
-	public Point startPoint;
 	public Shape selectedShape;
+	private PropertyChangeSupport support;
+	public List<Shape> shapes = new ArrayList<Shape>();
+	
+	public DrawingModel() {
+		support = new PropertyChangeSupport(this);
+	}
 
-	public void remove(Shape toBeRemoved)
-	{
-		if(shapes.remove(toBeRemoved) == false) {
-			System.out.println("Shape does not exist in list of shapes!");
-		}
-		
-		selectedShapes.remove(toBeRemoved);
-
+	public void addNewPCL(PropertyChangeListener listener) {
+		support.addPropertyChangeListener(listener);
+	}
+	public void removePCL(PropertyChangeListener listener) {
+		support.removePropertyChangeListener(listener);
 	}
 	
-	public void add(Shape toBeAdded) {
-			shapes.add(toBeAdded);
-			
-	}
-	
-	public void addSelectedShape(Shape toBeAdded) {
-		selectedShapes.add(toBeAdded);
-		
-}
-
-	public Point getStartPoint() {
-		return startPoint;
-	}
-
-	public void setStartPoint(Point startPoint) {
-		this.startPoint = startPoint;
-	}
-
-	public Shape getSelectedShape() {
-		return selectedShape;
-	}
-
-	public void setSelectedShape(Shape selectedShape) {
-		this.selectedShape = selectedShape;
-	}
-
 	public List<Shape> getShapes() {
 		return shapes;
 	}
@@ -59,40 +31,43 @@ public class DrawingModel implements Serializable {
 	public void setShapes(List<Shape> shapes) {
 		this.shapes = shapes;
 	}
-	
-	public void clear() {
-		
-		shapes.clear();
-		
-	}
-	
-	public List<Shape> getSelectedShapes() {
-		return selectedShapes;
+	public void add(Shape p) {
+		shapes.add(p);
+		support.firePropertyChange("Index", getShapes().size(), getShapes().indexOf(p));
 	}
 
-	public void addMultiple(ArrayList<Shape> shapes) {
-		this.shapes.addAll(shapes);
-		
-		
+	public void remove(Shape p) {
+		support.firePropertyChange("Index", getShapes().size()-1, getShapes().indexOf(p));
+		shapes.remove(p);
 	}
 	
-	public int getIndexOf(Shape shape) {
-		return shapes.indexOf(shape);
+	public void addSelected(Shape p) {
+		support.firePropertyChange("Size", this.selectedShapes.size(), this.selectedShapes.size()+1);
+		support.firePropertyChange("Index", getShapes().size(), getShapes().indexOf(p));
+		selectedShapes.add(p);		
 	}
-	
-	public Shape getByIndex(int index) {
+	public void removeSelected(Shape p) {
+		support.firePropertyChange("Size", this.selectedShapes.size(), this.selectedShapes.size()-1);
+		support.firePropertyChange("Index", getShapes().size()-1, getShapes().indexOf(p));
+		selectedShapes.remove(p);
+	}
+	public void position(int index, Shape s) {
+
+		shapes.add(index, s);
+		support.firePropertyChange("Index", getShapes().size(), index);
+	}
+	public Shape get(int index) {
 		return shapes.get(index);
 	}
-
-	public void removeSelected(Shape shape) {
-		// TODO Auto-generated method stub
-		
+	public Shape getSelectedShape() {
+		return selectedShape;
 	}
 
-	public void addSelected(Shape shape) {
-		// TODO Auto-generated method stub
-		
+	public void setSelectedShape(Shape selectedShape) {
+		this.selectedShape = selectedShape;
 	}
-
+	public ArrayList<Shape> getSelectedShapes() {
+		return selectedShapes;
+	}
 
 }

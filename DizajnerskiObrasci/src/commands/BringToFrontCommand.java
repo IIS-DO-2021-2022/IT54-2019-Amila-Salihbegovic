@@ -11,13 +11,12 @@ public class BringToFrontCommand implements Command{
 	public BringToFrontCommand(DrawingModel model,Shape shape) {
 		this.model=model;
 		this.shape=shape;
-		
+		this.index = model.getShapes().indexOf(shape);
 	}
 	
 
 	@Override
 	public void execute() {	
-			index=model.getIndexOf(shape);
 			model.getShapes().remove(shape);
 			model.getShapes().add(shape);		
 
