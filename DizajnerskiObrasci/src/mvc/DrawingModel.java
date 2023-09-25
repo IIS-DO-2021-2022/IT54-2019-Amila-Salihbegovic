@@ -84,5 +84,15 @@ public class DrawingModel implements Serializable {
 		return shapes.get(index);
 	}
 
+	public void removeSelected(Shape shape) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void addSelected(Shape shape) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }
