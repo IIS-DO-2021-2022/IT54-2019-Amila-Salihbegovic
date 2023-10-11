@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Stack;
 
+import javax.swing.JColorChooser;
 import javax.swing.JOptionPane;
 
 import adapter.HexagonAdapter;
@@ -25,9 +26,18 @@ import commands.AddLineCommand;
 import commands.AddPointCommand;
 import commands.AddRectangleCommand;
 import commands.Command;
+import commands.RemoveShapeCommand;
+import commands.UpdateCircleCommand;
+import commands.UpdateDonutCommand;
+import commands.UpdateHexagonCommand;
+import commands.UpdateLineCommand;
+import commands.UpdatePointCommand;
+import commands.UpdateRectangleCommand;
 import dialogs.DialogCircle;
 import dialogs.DialogDonut;
 import dialogs.DialogHexagon;
+import dialogs.DialogLine;
+import dialogs.DialogPoint;
 import dialogs.DialogRectangle;
 import dialogs.DialogShape;
 import geometricShapes.Circle;
@@ -41,8 +51,8 @@ import observer.ButtonsObserver;
 public class DrawingController {
 	private DrawingModel model;
 	private DrawingFrame frame;
-	private Color innerColor;
-	private Color outerColor;
+	private Color fillColor;
+	private Color borderColor;
 	private ButtonsObserver observer;
 	private Shape selectedShape;
 	private Point startPoint;
@@ -56,6 +66,8 @@ public class DrawingController {
 		this.frame = frame;
 		observer = new ButtonsObserver(frame);
 		model.addNewPCL(observer);
+		this.borderColor=frame.getTglbtnNOuterColor().getBackground();
+		this.fillColor=frame.getTglbtnInnerColor().getBackground();
 	}
 
 	private void showError(String message) {
@@ -66,14 +78,319 @@ public class DrawingController {
 	    JOptionPane.showMessageDialog(null, message, "Message", JOptionPane.INFORMATION_MESSAGE);
 	}
 	public void modify() {
-		// TODO Auto-generated method stub
-		
+		Shape selectedShape = model.getSelectedShapes().get(0);
+		if (selectedShape != null) {
+
+			if (selectedShape instanceof Point) {
+
+				ModifyPoint(selectedShape);
+			} else if (selectedShape instanceof Donut) {
+
+				ModifyDonut(selectedShape);
+			} else if (selectedShape instanceof Circle && (selectedShape instanceof Donut) == false) {
+
+				ModifyCircle(selectedShape);
+			} else if (selectedShape instanceof Line) {
+
+				ModifyLine(selectedShape);
+			} else if (selectedShape instanceof Rectangle) {
+
+				ModifyRectangle(selectedShape);
+			} else if (selectedShape instanceof HexagonAdapter) {
+				ModifyHexagon(selectedShape);
+			}
+
+		}
+		clearRedo();
+		model.getSelectedShapes().get(0).setSelected(true);
+
+		frame.getView().repaint();
+	}
+	private void ModifyPoint(Shape shape) {
+		Command command;
+		Point p = (Point) shape;
+		DialogPoint dglpoint = new DialogPoint();
+
+		dglpoint.getTxtX().setText("" + Integer.toString(p.getX()));
+		dglpoint.getTxtY().setText("" + Integer.toString(p.getY()));
+		dglpoint.getBtnColor().setBackground(p.getColor());
+		dglpoint.setModal(true);
+		dglpoint.setVisible(true);
+
+		if (dglpoint.isOK()) {
+			if (dglpoint.getTxtX().getText().trim().isEmpty() || dglpoint.getTxtY().getText().trim().isEmpty()) {
+				showError("All fields are required!");
+			}
+			try {
+				if (Integer.parseInt(dglpoint.getTxtX().getText().toString()) < 0
+						|| Integer.parseInt(dglpoint.getTxtY().getText().toString()) < 0) {
+					showError("Entered values must be greater than 0!");
+				} else {
+					frame.getTextArea().append("Modified-> " + ((Point) dglpoint.getP()).toString() + "\n");
+					command = new UpdatePointCommand((Point) selectedShape, dglpoint.getP());
+					command.execute();
+					actions.push(command);
+					selectedShape.setSelected(true);
+				}
+			} catch (Exception ex) {
+				showError("Please enter valid data");
+			}
+		} else {
+			showMessage("Operation cancelled!");
+		}
+
+	}
+
+	private void ModifyHexagon(Shape selectedShape2) {
+		Command command;
+		HexagonAdapter hex = (HexagonAdapter) selectedShape;
+		DialogHexagon dlghexagon = new DialogHexagon();
+
+		dlghexagon.getTxtX().setText("" + Integer.toString(hex.getNewHexagon().getX()));
+		dlghexagon.getTxtY().setText("" + Integer.toString(hex.getNewHexagon().getY()));
+		dlghexagon.getTxtR().setText("" + Integer.toString(hex.getNewHexagon().getR()));
+		dlghexagon.getBtnInnerColor().setBackground(hex.getNewHexagon().getAreaColor());
+		dlghexagon.getBtnOutlineColor().setBackground(hex.getNewHexagon().getBorderColor());
+		dlghexagon.setModal(true);
+		dlghexagon.setVisible(true);
+
+		if (dlghexagon.isOK()) {
+			if (dlghexagon.getTxtX().getText().trim().isEmpty() || dlghexagon.getTxtY().getText().trim().isEmpty()
+					|| dlghexagon.getTxtR().getText().trim().isEmpty()) {
+
+				showError("All fields are required!");
+			} else {
+				try {
+					if (Integer.parseInt(dlghexagon.getTxtR().getText().toString()) <= 0
+							|| Integer.parseInt(dlghexagon.getTxtX().getText().toString()) < 0
+							|| Integer.parseInt(dlghexagon.getTxtY().getText().toString()) < 0) {
+						showError("Entered values must be greater than 0!");
+					} else {
+						frame.getTextArea()
+								.append("Modified-> " + ((HexagonAdapter) dlghexagon.getHexagon()).toString() + "\n");
+						command = new UpdateHexagonCommand((HexagonAdapter) selectedShape, dlghexagon.getHexagon());
+						command.execute();
+						actions.push(command);
+						selectedShape.setSelected(true);
+					}
+				} catch (Exception ex) {
+					showError("Please enter valid data");
+				}
+			}
+
+		} else {
+			showMessage("Operation cancelled!");
+		}
+	}
+
+	private void ModifyRectangle(Shape selectedShape2) {
+		Command command;
+		Rectangle rect = (Rectangle) selectedShape;
+		DialogRectangle dlgrectangle = new DialogRectangle();
+
+		dlgrectangle.getTxtX().setText("" + Integer.toString(rect.getupperleft().getX()));
+		dlgrectangle.getTxtY().setText("" + Integer.toString(rect.getupperleft().getY()));
+		dlgrectangle.getTxtHeight().setText("" + Integer.toString(rect.getheight()));
+		dlgrectangle.getTxtWidth().setText("" + Integer.toString(rect.getwidth()));
+		dlgrectangle.getBtnInnerColor().setBackground(rect.getInnerColor());
+		dlgrectangle.getBtnOutlineColor().setBackground(rect.getColor());
+		dlgrectangle.setVisible(true);
+		dlgrectangle.setModal(true);
+
+		if (dlgrectangle.isOK()) {
+			if (dlgrectangle.getTxtX().getText().trim().isEmpty() || dlgrectangle.getTxtY().getText().trim().isEmpty()
+					|| dlgrectangle.getTxtHeight().getText().trim().isEmpty()
+					|| dlgrectangle.getTxtWidth().getText().trim().isEmpty()) {
+				showError("All fields are required!");
+			} else {
+				try {
+					if (Integer.parseInt(dlgrectangle.getTxtX().getText().toString()) < 0
+							|| Integer.parseInt(dlgrectangle.getTxtY().getText().toString()) < 0
+							|| Integer.parseInt(dlgrectangle.getTxtHeight().getText().toString()) < 0
+							|| Integer.parseInt(dlgrectangle.getTxtWidth().getText().toString()) < 0) {
+						showError("Entered values must be greater than 0!");
+					} else {
+						frame.getTextArea()
+								.append("Modified-> " + ((Rectangle) dlgrectangle.getRect()).toString() + "\n");
+						command = new UpdateRectangleCommand((Rectangle) selectedShape, dlgrectangle.getRect());
+						command.execute();
+						actions.push(command);
+						selectedShape.setSelected(true);
+					}
+				} catch (Exception ex) {
+					showError("Please enter valid data");
+				}
+			}
+
+		} else {
+			showMessage("Operation cancelled!");
+		}
+	}
+
+	private void ModifyLine(Shape selectedShape2) {
+		Command command;
+		Line line = (Line) selectedShape;
+		DialogLine dlgline = new DialogLine();
+
+		dlgline.getTxtXStart().setText("" + Integer.toString(line.getstartpoint().getX()));
+		dlgline.gettxtYStart().setText("" + Integer.toString(line.getstartpoint().getY()));
+		dlgline.getTxtXEnd().setText("" + Integer.toString(line.getendpoint().getX()));
+		dlgline.getTxtYEnd().setText("" + Integer.toString(line.getendpoint().getY()));
+		dlgline.getBtnColor().setBackground(line.getColor());
+		dlgline.setModal(true);
+		dlgline.setVisible(true);
+
+		if (dlgline.isOK()) {
+			if (dlgline.getTxtXStart().getText().trim().isEmpty() || dlgline.gettxtYStart().getText().trim().isEmpty()
+					|| dlgline.getTxtXEnd().getText().trim().isEmpty()
+					|| dlgline.getTxtYEnd().getText().trim().isEmpty()) {
+
+				showError("All fields are required!");
+			} else {
+				try {
+					if (Integer.parseInt(dlgline.getTxtXStart().getText().toString()) < 0
+							|| Integer.parseInt(dlgline.gettxtYStart().getText().toString()) < 0
+							|| Integer.parseInt(dlgline.getTxtXEnd().getText().toString()) < 0
+							|| Integer.parseInt(dlgline.getTxtYEnd().getText().toString()) < 0) {
+						showError("Entered values must be greater than 0!");
+
+					} else {
+						frame.getTextArea().append("Modified-> " + ((Line) dlgline.getLine()).toString() + "\n");
+						command = new UpdateLineCommand((Line) selectedShape, dlgline.getLine());
+						command.execute();
+						actions.push(command);
+						selectedShape.setSelected(true);
+					}
+				} catch (Exception ex) {
+					showError("Please enter valid data");
+				}
+			}
+
+		} else {
+			showMessage("Operation cancelled!");
+		}
+
+	}
+
+	private void ModifyCircle(Shape selectedShape2) {
+		Command command;
+		Circle circle = (Circle) selectedShape;
+		DialogCircle dglcircle = new DialogCircle();
+
+		dglcircle.getTxtX().setText("" + Integer.toString(circle.getcenter().getX()));
+		dglcircle.getTxtY().setText("" + Integer.toString(circle.getcenter().getY()));
+		dglcircle.getTxtRadius().setText("" + Integer.toString(circle.getradius()));
+		dglcircle.getBtnInnerColor().setBackground(circle.getInnerColor());
+		dglcircle.getBtnOutlineColor().setBackground(circle.getColor());
+		dglcircle.setVisible(true);
+		dglcircle.setModal(true);
+
+		if (dglcircle.isOK()) {
+			if (dglcircle.getTxtX().getText().trim().isEmpty() || dglcircle.getTxtY().getText().trim().isEmpty()
+					|| dglcircle.getTxtRadius().getText().trim().isEmpty()) {
+
+				showError("All fields are required!");
+			} else {
+				try {
+					if (Integer.parseInt(dglcircle.getTxtRadius().getText().toString()) <= 0
+							|| Integer.parseInt(dglcircle.getTxtX().getText().toString()) < 0
+							|| Integer.parseInt(dglcircle.getTxtY().getText().toString()) < 0) {
+						showError("Entered values must be greater than 0!");
+					} else {
+						frame.getTextArea().append("Modified-> " + ((Circle) dglcircle.getCircle()).toString() + "\n");
+						command = new UpdateCircleCommand((Circle) selectedShape, dglcircle.getCircle());
+						command.execute();
+						actions.push(command);
+						selectedShape.setSelected(true);
+					}
+				} catch (Exception ex) {
+					showError("Please enter valid data");
+				}
+			}
+
+		} else {
+			showMessage("Operation cancelled!");
+		}
+
+	}
+
+	private void ModifyDonut(Shape selectedShape2) {
+		Command command;
+		Donut donut = (Donut) selectedShape;
+		DialogDonut dgldonut = new DialogDonut();
+
+		dgldonut.getTxtX().setText("" + Integer.toString(donut.getcenter().getX()));
+		dgldonut.getTxtY().setText("" + Integer.toString(donut.getcenter().getY()));
+		dgldonut.getTxtR().setText("" + Integer.toString(donut.getradius()));
+		dgldonut.getTxtDIR().setText("" + Integer.toString(donut.getInnerRadius()));
+		dgldonut.getBtnInnerColor().setBackground(donut.getInnerColor());
+		dgldonut.getBtnOuterColor().setBackground(donut.getColor());
+		dgldonut.setModal(true);
+		dgldonut.setVisible(true);
+
+		if (dgldonut.isOK()) {
+			if (dgldonut.isOK()) {
+
+				if (dgldonut.getTxtX().getText().trim().isEmpty() || dgldonut.getTxtY().getText().trim().isEmpty()
+						|| dgldonut.getTxtR().getText().trim().isEmpty()
+						|| dgldonut.getTxtDIR().getText().trim().isEmpty()) {
+					showError("All fields are required!");
+				} else {
+					try {
+						if (Integer.parseInt(dgldonut.getTxtX().getText().toString()) < 0
+								|| Integer.parseInt(dgldonut.getTxtY().getText().toString()) < 0
+								|| Integer.parseInt(dgldonut.getTxtR().getText().toString()) < 0
+								|| Integer.parseInt(dgldonut.getTxtDIR().getText().toString()) < 0) {
+							showError("Entered values must be greater than 0!");
+						} else {
+							frame.getTextArea().append("Modified-> " + ((Donut) dgldonut.getDonut()).toString() + "\n");
+							command = new UpdateDonutCommand((Donut) selectedShape, dgldonut.getDonut());
+							command.execute();
+							selectedShape.setSelected(true);
+							actions.push(command);
+						}
+					} catch (Exception ex) {
+						showError("Please enter valid data");
+					}
+				}
+			} else {
+				showMessage("Operation cancelled!");
+			}
+
+		}
 	}
 
 	public void delete() {
-		// TODO Auto-generated method stub
-		
+		ArrayList<Shape> selectedShapes = model.getSelectedShapes();
+
+	    if (selectedShapes == null || selectedShapes.isEmpty()) {
+	        showError("You haven't selected any shape!");
+	        return;
+	    }
+
+	    int selectedOption = showDeleteConfirmationDialog();
+
+	    if (selectedOption == JOptionPane.YES_OPTION) {
+	    	frame.getTextArea().append("Deleted-> " + selectedShapes.toString() + "\n");
+		    Command command = new RemoveShapeCommand(model, selectedShapes);
+		    command.execute();
+		    frame.getBtnUndo().setEnabled(true);
+			frame.getBtnRedo().setEnabled(false);
+		    actions.push(command);
+	    }else {
+	    	showMessage("Operation cancelled!");
+	    }
+
+	    clearRedo();
+	    frame.getView().repaint();
+	    frame.getTglbtnSelect().setSelected(false);
 	}
+
+	private int showDeleteConfirmationDialog() {
+	    return JOptionPane.showConfirmDialog(null, "Are you sure you want to delete?",
+	            "Warning message", JOptionPane.YES_NO_OPTION);
+	}
+
 	public void redo() {
 		// TODO Auto-generated method stub
 		
@@ -126,13 +443,15 @@ public class DrawingController {
 
 
 	public void BorderColor() {
-		// TODO Auto-generated method stub
-		
+		Color choseColor = JColorChooser.showDialog(null, "Chose inside color", Color.BLACK);
+		frame.getTglbtnNOuterColor().setBackground(choseColor);
+		borderColor=frame.getTglbtnNOuterColor().getBackground();
 	}
 
 	public void AreaColor() {
-		// TODO Auto-generated method stub
-		
+		Color choseColor = JColorChooser.showDialog(null, "Chose inside color", Color.BLACK);
+		frame.getTglbtnInnerColor().setBackground(choseColor);
+		fillColor=frame.getTglbtnInnerColor().getBackground();
 	}
 
 	public void mouseClicked(MouseEvent me) {
@@ -161,6 +480,13 @@ public class DrawingController {
 		    dialog.setVisible(true);
 
 		    if (dialog.isOK()) {
+		    	if(dialog.getTxtHeight().getText().trim().isEmpty()) {
+		    		showError("All fields are required!");
+		    	}
+		    	if (Integer.parseInt(dialog.getTxtWidth().getText().toString()) <= 0
+						|| Integer.parseInt(dialog.getTxtHeight().getText().toString()) <= 0){
+		    		showError("Insert values greater than 0!");
+		    	}
 		        Rectangle newShape = dialog.getRect();
 		        frame.getTextArea().append("Added-> "+newShape.toString()+"\n");
 		        Command newRectangleCmd = new AddRectangleCommand(newShape, model);
@@ -222,6 +548,13 @@ public class DrawingController {
 		dialog.setVisible(true);
 		
 		if(dialog.isOK()) {
+			if (dialog.getTxtR().getText().trim().isEmpty() || dialog.getTxtDIR().getText().trim().isEmpty()) {
+				showError("All fields are required!");
+			}
+			if (Integer.parseInt(dialog.getTxtDIR().getText().toString()) <= 0
+					|| Integer.parseInt(dialog.getTxtR().getText().toString()) <= 0) {
+				showError("Insert values greater than 0!");
+			}
 			Donut newShape = dialog.getDonut();
 			frame.getTextArea().append("Added-> "+newShape.toString()+ "\n");
 			Command newDonutCmd = new AddDonutCommand(newShape, model);
@@ -250,6 +583,12 @@ public class DrawingController {
 		dialog.setVisible(true);
 		
 		if(dialog.isOK()) {
+			if  (dialog.getTxtRadius().getText().trim().isEmpty()) {
+				showError("All fields are required!");
+			}
+			if (Integer.parseInt(dialog.getTxtRadius().getText().toString()) <= 0) {
+				showError("Insert values greater than 0!");
+			}
 			Circle newCircle = dialog.getCircle();
 			frame.getTextArea().append("Added-> " +newCircle.toString() + "\n");
 			Command newCircleCmd = new AddCircleCommand(newCircle, model);
@@ -349,20 +688,20 @@ public class DrawingController {
 		this.frame = frame;
 	}
 
-	public Color getInnerColor() {
-		return innerColor;
+	public Color getFillComor() {
+		return fillColor;
 	}
 
-	public void setInnerColor(Color innerColor) {
-		this.innerColor = innerColor;
+	public void setFillColor(Color fillColor) {
+		this.fillColor = fillColor;
 	}
 
-	public Color getOuterColor() {
-		return outerColor;
+	public Color getBorderColor() {
+		return borderColor;
 	}
 
-	public void setOuterColor(Color outerColor) {
-		this.outerColor = outerColor;
+	public void setBorderColor(Color borderColor) {
+		this.borderColor = borderColor;
 	}
 
 	public ButtonsObserver getObserver() {
@@ -406,11 +745,11 @@ public class DrawingController {
 	}
 
 	private void setColors(DialogShape dialog) {
-	    if (innerColor != null) {
-	        dialog.setInnerColor(innerColor);
+	    if (fillColor != null) {
+	        dialog.setInnerColor(fillColor);
 	    }
-	    if (outerColor != null) {
-	        dialog.setOuterColor(outerColor);
+	    if (borderColor != null) {
+	        dialog.setOuterColor(borderColor);
 	    }
 	}
 }
