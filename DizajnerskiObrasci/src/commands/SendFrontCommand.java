@@ -5,12 +5,12 @@ import java.util.Collections;
 import geometricShapes.Shape;
 import mvc.DrawingModel;
 
-public class SendFront implements Command{
+public class SendFrontCommand implements Command{
 	private DrawingModel model;
 	private int index;
 	private Shape shape;
 
-	public SendFront(DrawingModel model, int index, Shape shape) {
+	public SendFrontCommand(DrawingModel model, int index, Shape shape) {
 		this.model = model;
 		this.index = index;
 		this.shape = shape;

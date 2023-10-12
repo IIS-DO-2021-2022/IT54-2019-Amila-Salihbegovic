@@ -25,8 +25,12 @@ import commands.AddHexagonCommand;
 import commands.AddLineCommand;
 import commands.AddPointCommand;
 import commands.AddRectangleCommand;
+import commands.BringToBackCommand;
+import commands.BringToFrontCommand;
 import commands.Command;
 import commands.RemoveShapeCommand;
+import commands.SendBackCommand;
+import commands.SendFrontCommand;
 import commands.UpdateCircleCommand;
 import commands.UpdateDonutCommand;
 import commands.UpdateHexagonCommand;
@@ -51,14 +55,13 @@ import observer.ButtonsObserver;
 public class DrawingController {
 	private DrawingModel model;
 	private DrawingFrame frame;
-	private Color fillColor;
-	private Color borderColor;
 	private ButtonsObserver observer;
 	private Shape selectedShape;
 	private Point startPoint;
 	private Stack<Command> actions = new Stack<Command>();
 	private Stack<Command> undoactions = new Stack<Command>();
-
+	private Color borderColor = Color.BLACK;
+	private Color fillColor = Color.BLACK;
 
 	public DrawingController(DrawingModel model, DrawingFrame frame) {
 		super();
@@ -66,17 +69,18 @@ public class DrawingController {
 		this.frame = frame;
 		observer = new ButtonsObserver(frame);
 		model.addNewPCL(observer);
-		this.borderColor=frame.getTglbtnNOuterColor().getBackground();
-		this.fillColor=frame.getTglbtnInnerColor().getBackground();
+		this.borderColor = frame.getTglbtnNOuterColor().getBackground();
+		this.fillColor = frame.getTglbtnInnerColor().getBackground();
 	}
 
 	private void showError(String message) {
-	    JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	private void showMessage(String message) {
-	    JOptionPane.showMessageDialog(null, message, "Message", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(null, message, "Message", JOptionPane.INFORMATION_MESSAGE);
 	}
+
 	public void modify() {
 		Shape selectedShape = model.getSelectedShapes().get(0);
 		if (selectedShape != null) {
@@ -106,6 +110,7 @@ public class DrawingController {
 
 		frame.getView().repaint();
 	}
+
 	private void ModifyPoint(Shape shape) {
 		Command command;
 		Point p = (Point) shape;
@@ -363,95 +368,208 @@ public class DrawingController {
 	public void delete() {
 		ArrayList<Shape> selectedShapes = model.getSelectedShapes();
 
-	    if (selectedShapes == null || selectedShapes.isEmpty()) {
-	        showError("You haven't selected any shape!");
-	        return;
-	    }
+		if (selectedShapes == null || selectedShapes.isEmpty()) {
+			showError("You haven't selected any shape!");
+			return;
+		}
 
-	    int selectedOption = showDeleteConfirmationDialog();
+		int selectedOption = showDeleteConfirmationDialog();
 
-	    if (selectedOption == JOptionPane.YES_OPTION) {
-	    	frame.getTextArea().append("Deleted-> " + selectedShapes.toString() + "\n");
-		    Command command = new RemoveShapeCommand(model, selectedShapes);
-		    command.execute();
-		    frame.getBtnUndo().setEnabled(true);
+		if (selectedOption == JOptionPane.YES_OPTION) {
+			frame.getTextArea().append("Deleted-> " + selectedShapes.toString() + "\n");
+			Command command = new RemoveShapeCommand(model, selectedShapes);
+			command.execute();
+			frame.getBtnUndo().setEnabled(true);
 			frame.getBtnRedo().setEnabled(false);
-		    actions.push(command);
-	    }else {
-	    	showMessage("Operation cancelled!");
-	    }
+			actions.push(command);
+		} else {
+			showMessage("Operation cancelled!");
+		}
 
-	    clearRedo();
-	    frame.getView().repaint();
-	    frame.getTglbtnSelect().setSelected(false);
+		clearRedo();
+		frame.getView().repaint();
+		frame.getTglbtnSelect().setSelected(false);
 	}
 
 	private int showDeleteConfirmationDialog() {
-	    return JOptionPane.showConfirmDialog(null, "Are you sure you want to delete?",
-	            "Warning message", JOptionPane.YES_NO_OPTION);
+		return JOptionPane.showConfirmDialog(null, "Are you sure you want to delete?", "Warning message",
+				JOptionPane.YES_NO_OPTION);
 	}
 
 	public void redo() {
-		// TODO Auto-generated method stub
-		
+		if (actions.isEmpty()) {
+			frame.getBtnRedo().setEnabled(false);
+		}
+		if (!undoactions.isEmpty()) {
+
+			Command redo = undoactions.pop();
+			redo.execute();
+			actions.push(redo);
+			frame.getTextArea().append("Redo->" + actions.peek().toString()+ "\n");
+			frame.getBtnUndo().setEnabled(true);
+
+			frame.getBtnRedo().setEnabled(!undoactions.isEmpty());
+			frame.getView().repaint();
+			System.out.print("Redo stack:" + undoactions);
+			if (undoactions.isEmpty()) {
+				frame.getBtnRedo().setEnabled(false);
+				JOptionPane.showMessageDialog(null, "There is nothing left to redo");
+
+			}
+		}
+		model.getSelectedShapes().get(0).setSelected(true);
 	}
 
 	public void undo() {
-		// TODO Auto-generated method stub
-		
+		if (undoactions.isEmpty()) {
+			frame.getBtnUndo().setEnabled(false);
+		}
+		if (!actions.isEmpty()) {
+			Command undo = actions.pop();
+			undo.unexecute();
+			undoactions.push(undo);
+			frame.getTextArea().append("Undo->" + undoactions.peek().toString() + "\n");
+			frame.getBtnRedo().setEnabled(!undoactions.isEmpty());
+			frame.getBtnUndo().setEnabled(!actions.isEmpty());
+			frame.getView().repaint();
+
+			if (actions.isEmpty()) {
+				frame.getBtnUndo().setEnabled(false);
+				showMessage("There is nothing to undo!");
+			}
+		}
+		model.getSelectedShapes().get(0).setSelected(true);
 	}
 
 	public void SendFront() {
-		// TODO Auto-generated method stub
+		if(model.getSelectedShapes().size() == 1) {
+			
+			int index = model.getShapes().indexOf(model.getSelectedShapes().get(0));
+			Shape shape = model.getShapes().get(index);
+			
+			if(index==model.getShapes().size()-1) {
+				
+				JOptionPane.showMessageDialog(null, "Element is alrady in front!"); 
+				
+			} else {
+				
+				SendFrontCommand toFront = new SendFrontCommand(model,index, shape);
+				actions.push(toFront);
+				frame.getTextArea().append("To front->" + shape.toString());
+				toFront.execute();	
+				clearRedo();
+			}			
+		}
+		
+		frame.repaint();
 		
 	}
 
 	public void SendBack() {
-		// TODO Auto-generated method stub
+		if(model.getSelectedShapes().size() == 1) {
+			
+			int index = model.getShapes().indexOf(model.getSelectedShapes().get(0));
+			Shape shape = model.getShapes().get(index);
+			
+			if(index==0) {
+				
+				JOptionPane.showMessageDialog(null, "Element is alrady in back!"); 		
+				
+			}else {
+				
+				SendBackCommand toBack = new SendBackCommand(model,index, shape);
+				actions.push(toBack);
+				frame.getTextArea().append("To back->" + shape.toString());
+				toBack.execute();
+				clearRedo();
+								
+			}
+			
+		}
+		frame.repaint();
 		
 	}
 
 	public void BringToFront() {
-		// TODO Auto-generated method stub
-		
+		if(model.getSelectedShapes().size() == 1) {
+			
+			int index = model.getShapes().indexOf(model.getSelectedShapes().get(0));
+			Shape shape = model.getShapes().get(index);
+			
+			if(index==model.getShapes().size()-1) {
+				
+				JOptionPane.showMessageDialog(null, "Element is alrady in front!"); 			
+				
+			}else {
+				
+				BringToFrontCommand BringToFront = new BringToFrontCommand(model,shape);
+				actions.push(BringToFront);
+				frame.getTextArea().append("Bring_to_front->" + shape.toString());
+				BringToFront.execute();
+				clearRedo();
+								
+			}
+			
+		}
+		frame.repaint();
+				
 	}
 
 	public void BringToBack() {
-		// TODO Auto-generated method stub
-		
+		if(model.getSelectedShapes().size() == 1) {
+			
+			int index = model.getShapes().indexOf(model.getSelectedShapes().get(0));
+			Shape shape = model.getShapes().get(index);
+			
+			if(index==0) {
+				
+				JOptionPane.showMessageDialog(null, "Element is alrady in back!");				
+				
+			}else {
+				
+				BringToBackCommand BringToBack = new BringToBackCommand(model,shape, index);
+				actions.push(BringToBack);
+				frame.getTextArea().append("Bring_to_back->" + shape.toString());
+				BringToBack.execute();
+				clearRedo();
+								
+			}
+			
+		}
+		frame.repaint();
+				
 	}
 
 	public void saveCommands() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void loadCommands() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void saveDrawing() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void loadDrawing() {
 		// TODO Auto-generated method stub
-		
-	}
 
+	}
 
 	public void BorderColor() {
 		Color choseColor = JColorChooser.showDialog(null, "Chose inside color", Color.BLACK);
 		frame.getTglbtnNOuterColor().setBackground(choseColor);
-		borderColor=frame.getTglbtnNOuterColor().getBackground();
+		borderColor = frame.getTglbtnNOuterColor().getBackground();
 	}
 
 	public void AreaColor() {
 		Color choseColor = JColorChooser.showDialog(null, "Chose inside color", Color.BLACK);
 		frame.getTglbtnInnerColor().setBackground(choseColor);
-		fillColor=frame.getTglbtnInnerColor().getBackground();
+		fillColor = frame.getTglbtnInnerColor().getBackground();
 	}
 
 	public void mouseClicked(MouseEvent me) {
@@ -474,80 +592,80 @@ public class DrawingController {
 	}
 
 	private void createRectangleShape(MouseEvent me) {
-		 DialogRectangle dialog = createRectangleDialog(me.getX(), me.getY());
-		    setColors(dialog);
+		DialogRectangle dialog = createRectangleDialog(me.getX(), me.getY());
+		setColors(dialog);
 
-		    dialog.setVisible(true);
+		dialog.setVisible(true);
 
-		    if (dialog.isOK()) {
-		    	if(dialog.getTxtHeight().getText().trim().isEmpty()) {
-		    		showError("All fields are required!");
-		    	}
-		    	if (Integer.parseInt(dialog.getTxtWidth().getText().toString()) <= 0
-						|| Integer.parseInt(dialog.getTxtHeight().getText().toString()) <= 0){
-		    		showError("Insert values greater than 0!");
-		    	}
-		        Rectangle newShape = dialog.getRect();
-		        frame.getTextArea().append("Added-> "+newShape.toString()+"\n");
-		        Command newRectangleCmd = new AddRectangleCommand(newShape, model);
-		        newRectangleCmd.execute();
-		        actions.push(newRectangleCmd);
-		        frame.getBtnUndo().setEnabled(true);
-				clearRedo();
-				frame.getView().repaint();
-		    }else {
-		    	showMessage("Operation cancelled!");
-		    }
-		    
+		if (dialog.isOK()) {
+			if (dialog.getTxtHeight().getText().trim().isEmpty()) {
+				showError("All fields are required!");
+			}
+			if (Integer.parseInt(dialog.getTxtWidth().getText().toString()) <= 0
+					|| Integer.parseInt(dialog.getTxtHeight().getText().toString()) <= 0) {
+				showError("Insert values greater than 0!");
+			}
+			Rectangle newShape = dialog.getRect();
+			frame.getTextArea().append("Added-> " + newShape.toString() + "\n");
+			Command newRectangleCmd = new AddRectangleCommand(newShape, model);
+			newRectangleCmd.execute();
+			actions.push(newRectangleCmd);
+			frame.getBtnUndo().setEnabled(true);
+			clearRedo();
+			frame.getView().repaint();
+		} else {
+			showMessage("Operation cancelled!");
+		}
+
 	}
 
 	private DialogRectangle createRectangleDialog(int x, int y) {
 		DialogRectangle dialog = new DialogRectangle();
-	    dialog.setModal(true);
-	    dialog.getTxtX().setText(Integer.toString(x));
-	    dialog.getTxtX().setEditable(false);
-	    dialog.getTxtY().setText(Integer.toString(y));
-	    dialog.getTxtY().setEditable(false);
-	    return dialog;
+		dialog.setModal(true);
+		dialog.getTxtX().setText(Integer.toString(x));
+		dialog.getTxtX().setEditable(false);
+		dialog.getTxtY().setText(Integer.toString(y));
+		dialog.getTxtY().setEditable(false);
+		return dialog;
 	}
 
 	private void createHexagonShape(MouseEvent me) {
 		DialogHexagon dialog = createHexagonDialog(me.getX(), me.getY());
 		setColors(dialog);
 		dialog.setVisible(true);
-		
-		if(dialog.isOK()) {
+
+		if (dialog.isOK()) {
 			try {
 				HexagonAdapter newHexagon = dialog.getHexagon();
-				frame.getTextArea().append("Added-> "+newHexagon.toString()+ "\n");
+				frame.getTextArea().append("Added-> " + newHexagon.toString() + "\n");
 				Command newHexagonCmd = new AddHexagonCommand(newHexagon, model);
 				newHexagonCmd.execute();
 				actions.push(newHexagonCmd);
-				
+
 				frame.getBtnUndo().setEnabled(true);
 				clearRedo();
 				frame.getView().repaint();
-			}catch (Exception ex) {
-	            showError("Wrong data type!");
-	        }
+			} catch (Exception ex) {
+				showError("Wrong data type!");
+			}
 		}
 	}
 
 	private DialogHexagon createHexagonDialog(int x, int y) {
-		 DialogHexagon dialog = new DialogHexagon();
-		    dialog.getTxtX().setText(Integer.toString(x));
-		    dialog.getTxtX().setEditable(false);
-		    dialog.getTxtY().setText(Integer.toString(y));
-		    dialog.getTxtY().setEditable(false);
-		    return dialog;
+		DialogHexagon dialog = new DialogHexagon();
+		dialog.getTxtX().setText(Integer.toString(x));
+		dialog.getTxtX().setEditable(false);
+		dialog.getTxtY().setText(Integer.toString(y));
+		dialog.getTxtY().setEditable(false);
+		return dialog;
 	}
 
 	private void createDonutShape(MouseEvent me) {
 		DialogDonut dialog = createDonutDialog(me.getX(), me.getY());
 		setColors(dialog);
 		dialog.setVisible(true);
-		
-		if(dialog.isOK()) {
+
+		if (dialog.isOK()) {
 			if (dialog.getTxtR().getText().trim().isEmpty() || dialog.getTxtDIR().getText().trim().isEmpty()) {
 				showError("All fields are required!");
 			}
@@ -556,11 +674,11 @@ public class DrawingController {
 				showError("Insert values greater than 0!");
 			}
 			Donut newShape = dialog.getDonut();
-			frame.getTextArea().append("Added-> "+newShape.toString()+ "\n");
+			frame.getTextArea().append("Added-> " + newShape.toString() + "\n");
 			Command newDonutCmd = new AddDonutCommand(newShape, model);
 			newDonutCmd.execute();
 			actions.push(newDonutCmd);
-			
+
 			frame.getBtnUndo().setEnabled(true);
 			clearRedo();
 			frame.getView().repaint();
@@ -568,33 +686,33 @@ public class DrawingController {
 	}
 
 	private DialogDonut createDonutDialog(int x, int y) {
-		 DialogDonut dialog = new DialogDonut();
-		    dialog.setModal(true);
-		    dialog.getTxtX().setText(Integer.toString(x));
-		    dialog.getTxtX().setEditable(false);
-		    dialog.getTxtY().setText(Integer.toString(y));
-		    dialog.getTxtY().setEditable(false);
-		    return dialog;
+		DialogDonut dialog = new DialogDonut();
+		dialog.setModal(true);
+		dialog.getTxtX().setText(Integer.toString(x));
+		dialog.getTxtX().setEditable(false);
+		dialog.getTxtY().setText(Integer.toString(y));
+		dialog.getTxtY().setEditable(false);
+		return dialog;
 	}
 
 	private void createCircleShape(MouseEvent me) {
 		DialogCircle dialog = createCircleDialog(me.getX(), me.getY());
 		setColors(dialog);
 		dialog.setVisible(true);
-		
-		if(dialog.isOK()) {
-			if  (dialog.getTxtRadius().getText().trim().isEmpty()) {
+
+		if (dialog.isOK()) {
+			if (dialog.getTxtRadius().getText().trim().isEmpty()) {
 				showError("All fields are required!");
 			}
 			if (Integer.parseInt(dialog.getTxtRadius().getText().toString()) <= 0) {
 				showError("Insert values greater than 0!");
 			}
 			Circle newCircle = dialog.getCircle();
-			frame.getTextArea().append("Added-> " +newCircle.toString() + "\n");
+			frame.getTextArea().append("Added-> " + newCircle.toString() + "\n");
 			Command newCircleCmd = new AddCircleCommand(newCircle, model);
 			newCircleCmd.execute();
 			actions.push(newCircleCmd);
-			
+
 			frame.getBtnUndo().setEnabled(true);
 			clearRedo();
 			frame.getView().repaint();
@@ -602,12 +720,12 @@ public class DrawingController {
 	}
 
 	private DialogCircle createCircleDialog(int x, int y) {
-		 DialogCircle dialog = new DialogCircle();
-		    dialog.getTxtX().setText(Integer.toString(x));
-		    dialog.getTxtX().setEditable(false);
-		    dialog.getTxtY().setText(Integer.toString(y));
-		    dialog.getTxtY().setEditable(false);
-		    return dialog;
+		DialogCircle dialog = new DialogCircle();
+		dialog.getTxtX().setText(Integer.toString(x));
+		dialog.getTxtX().setEditable(false);
+		dialog.getTxtY().setText(Integer.toString(y));
+		dialog.getTxtY().setEditable(false);
+		return dialog;
 	}
 
 	private void createLineShape(MouseEvent me) {
@@ -620,7 +738,7 @@ public class DrawingController {
 			Command newLineCmd = new AddLineCommand(newShape, model);
 			newLineCmd.execute();
 			actions.push(newLineCmd);
-			
+
 			frame.getBtnUndo().setEnabled(true);
 			clearRedo();
 			frame.getView().repaint();
@@ -633,7 +751,7 @@ public class DrawingController {
 		Command newPointCmd = new AddPointCommand(newPoint, model);
 		newPointCmd.execute();
 		actions.push(newPointCmd);
-		
+
 		frame.getBtnUndo().setEnabled(true);
 		clearRedo();
 		frame.getView().repaint();
@@ -648,15 +766,15 @@ public class DrawingController {
 		Point click = new Point(me.getX(), me.getY());
 		selectedShape = null;
 
-		 List<Shape> shapes = model.getShapes();
+		List<Shape> shapes = model.getShapes();
 
-		    for (int i = shapes.size() - 1; i >= 0; i--) {
-		        Shape shape = shapes.get(i);
-		        if (shape.contains(click.getX(), click.getY())) {
-		            selectedShape = shape;
-		            break;
-		        }
-		    }
+		for (int i = shapes.size() - 1; i >= 0; i--) {
+			Shape shape = shapes.get(i);
+			if (shape.contains(click.getX(), click.getY())) {
+				selectedShape = shape;
+				break;
+			}
+		}
 
 		if (selectedShape != null) {
 			boolean isSelected = selectedShape.isSelected();
@@ -672,6 +790,7 @@ public class DrawingController {
 			}
 		}
 	}
+
 	public DrawingModel getModel() {
 		return model;
 	}
@@ -745,11 +864,11 @@ public class DrawingController {
 	}
 
 	private void setColors(DialogShape dialog) {
-	    if (fillColor != null) {
-	        dialog.setInnerColor(fillColor);
-	    }
-	    if (borderColor != null) {
-	        dialog.setOuterColor(borderColor);
-	    }
+		if (fillColor != null) {
+			dialog.setInnerColor(fillColor);
+		}
+		if (borderColor != null) {
+			dialog.setOuterColor(borderColor);
+		}
 	}
 }
