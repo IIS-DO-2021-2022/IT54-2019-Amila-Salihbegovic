@@ -5,6 +5,11 @@ public class FileManager implements FileChooser {
 	private FileChooser chooser;
 	
 
+	public FileManager(FileChooser chooser) {
+		super();
+		this.chooser = chooser;
+	}
+
 	@Override
 	public void save(String filePath) {
 		chooser.save(filePath);

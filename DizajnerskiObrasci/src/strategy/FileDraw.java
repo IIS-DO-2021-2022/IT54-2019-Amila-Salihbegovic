@@ -31,6 +31,11 @@ public class FileDraw implements FileChooser{
 	}
 	
 	
+	public FileDraw(DrawingModel model) {
+		super();
+		this.model = model;
+	}
+
 	@Override
 	public void save(String filePath) {
 		if (filePath == null)
