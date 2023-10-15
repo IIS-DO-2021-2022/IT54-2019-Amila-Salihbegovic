@@ -58,7 +58,7 @@ public class DialogRectangle  extends JDialog implements DialogShape{
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPanel.setBackground(Color.BLACK);
+		contentPanel.setBackground(new Color(230, 230, 250));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
 		gbl_contentPanel.columnWidths = new int[]{0, 0, 0, 0};
@@ -69,7 +69,7 @@ public class DialogRectangle  extends JDialog implements DialogShape{
 		
 		{
 			JLabel lblX = new JLabel("Insert coordinate X:");
-			lblX.setForeground(new Color(124,208,247));
+			lblX.setForeground(Color.BLUE);
 			GridBagConstraints gbc_lblX = new GridBagConstraints();
 			gbc_lblX.anchor = GridBagConstraints.EAST;
 			gbc_lblX.insets = new Insets(0, 0, 5, 5);
@@ -89,7 +89,7 @@ public class DialogRectangle  extends JDialog implements DialogShape{
 		}
 		{
 			JLabel lblY = new JLabel("Insert coordinate Y:");
-			lblY.setForeground(new Color(124,208,247));
+			lblY.setForeground(Color.BLUE);
 			GridBagConstraints gbc_lblY = new GridBagConstraints();
 			gbc_lblY.anchor = GridBagConstraints.EAST;
 			gbc_lblY.insets = new Insets(0, 0, 5, 5);
@@ -109,7 +109,7 @@ public class DialogRectangle  extends JDialog implements DialogShape{
 		}
 		{
 			JLabel lblHeight = new JLabel("Insert height:");
-			lblHeight.setForeground(new Color(124,208,247));
+			lblHeight.setForeground(Color.BLUE);
 			GridBagConstraints gbc_lblHeight = new GridBagConstraints();
 			gbc_lblHeight.anchor = GridBagConstraints.EAST;
 			gbc_lblHeight.insets = new Insets(0, 0, 5, 5);
@@ -130,7 +130,7 @@ public class DialogRectangle  extends JDialog implements DialogShape{
 		}
 		{
 			JLabel lblWidth = new JLabel("Insert width:");
-			lblWidth.setForeground(new Color(124,208,247));
+			lblWidth.setForeground(Color.BLUE);
 			GridBagConstraints gbc_lblWidth = new GridBagConstraints();
 			gbc_lblWidth.anchor = GridBagConstraints.EAST;
 			gbc_lblWidth.insets = new Insets(0, 0, 0, 5);
@@ -156,8 +156,8 @@ public class DialogRectangle  extends JDialog implements DialogShape{
 			}
 		});
 
-		btnInnerColor.setBackground(new Color(124,208,247));
-		btnInnerColor.setForeground(Color.BLACK);
+		btnInnerColor.setBackground(new Color(230, 230, 250));
+		btnInnerColor.setForeground(Color.BLUE);
 		GridBagConstraints gbc_btnInnerColor = new GridBagConstraints();
 		gbc_btnInnerColor.anchor = GridBagConstraints.SOUTH;
 		gbc_btnInnerColor.insets = new Insets(0, 0, 5, 5);
@@ -176,8 +176,8 @@ public class DialogRectangle  extends JDialog implements DialogShape{
 			}
 		});
 
-		btnOutlineColor.setBackground(new Color(124,208,247));
-		btnOutlineColor.setForeground(Color.BLACK);
+		btnOutlineColor.setBackground(new Color(230, 230, 250));
+		btnOutlineColor.setForeground(Color.BLUE);
 		GridBagConstraints gbc_btnOutlineColor = new GridBagConstraints();
 		gbc_btnOutlineColor.insets = new Insets(0, 0, 0, 5);
 		gbc_btnOutlineColor.gridx = 3;

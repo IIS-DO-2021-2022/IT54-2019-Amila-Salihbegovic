@@ -29,4 +29,8 @@ public class UpdateHexagonCommand implements Command{
 		hexagon.setParametersFrom(oldHex);
 	}
 
+	@Override
+	public String toString() {
+		return "Modified->" + hexagon.toString();
+	}
 }

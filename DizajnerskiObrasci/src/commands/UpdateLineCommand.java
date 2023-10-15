@@ -24,4 +24,8 @@ public class UpdateLineCommand implements Command {
     public void unexecute() {
         line.setPropertiesFrom(oldState);
     }
+    @Override
+	public String toString() {
+		return "Modified->" + line.toString();
+	}
 }

@@ -27,5 +27,9 @@ public class UpdateDonutCommand implements Command{
 	public void unexecute() {
 		donut.setPropertiesFrom(oldState);
 	}
+	@Override
+	public String toString() {
+		return "Modified->" + donut.toString();
+	}
 
 }

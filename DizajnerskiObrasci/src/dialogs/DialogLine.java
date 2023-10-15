@@ -53,7 +53,7 @@ public class DialogLine extends JDialog{
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPanel.setBackground(Color.BLACK);
+		contentPanel.setBackground(new Color(230, 230, 250));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
 		gbl_contentPanel.columnWidths = new int[]{0, 0, 0};
@@ -63,7 +63,7 @@ public class DialogLine extends JDialog{
 		contentPanel.setLayout(gbl_contentPanel);
 		{
 			JLabel lblHeadline = new JLabel("Insert values:");
-			lblHeadline.setForeground(new Color(124,208,247));
+			lblHeadline.setForeground(Color.BLUE);
 			GridBagConstraints gbc_lblHeadline = new GridBagConstraints();
 			gbc_lblHeadline.insets = new Insets(0, 0, 5, 0);
 			gbc_lblHeadline.gridx = 1;
@@ -72,7 +72,7 @@ public class DialogLine extends JDialog{
 		}
 		{
 			JLabel lblX = new JLabel("Insert coordinate X (start point):");
-			lblX.setForeground(new Color(124,208,247));
+			lblX.setForeground(Color.BLUE);
 			GridBagConstraints gbc_lblX = new GridBagConstraints();
 			gbc_lblX.anchor = GridBagConstraints.EAST;
 			gbc_lblX.insets = new Insets(0, 0, 5, 5);
@@ -93,7 +93,7 @@ public class DialogLine extends JDialog{
 		}
 		{
 			JLabel lblY = new JLabel("Insert coordinate Y (start point):");
-			lblY.setForeground(new Color(124,208,247));
+			lblY.setForeground(Color.BLUE);
 			GridBagConstraints gbc_lblY = new GridBagConstraints();
 			gbc_lblY.anchor = GridBagConstraints.EAST;
 			gbc_lblY.insets = new Insets(0, 0, 5, 5);
@@ -114,7 +114,7 @@ public class DialogLine extends JDialog{
 		}
 		{
 			JLabel lblXend = new JLabel("Insert coordinate X (end point):");
-			lblXend.setForeground(new Color(124,208,247));
+			lblXend.setForeground(Color.BLUE);
 			GridBagConstraints gbc_lblXend = new GridBagConstraints();
 			gbc_lblXend.anchor = GridBagConstraints.EAST;
 			gbc_lblXend.insets = new Insets(0, 0, 5, 5);
@@ -135,7 +135,7 @@ public class DialogLine extends JDialog{
 		}
 		{
 			JLabel lblNewLabel = new JLabel("Insert coordinate Y (end point):");
-			lblNewLabel.setForeground(new Color(124,208,247));
+			lblNewLabel.setForeground(Color.BLUE);
 			GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 			gbc_lblNewLabel.anchor = GridBagConstraints.EAST;
 			gbc_lblNewLabel.insets = new Insets(0, 0, 0, 5);
@@ -163,8 +163,8 @@ public class DialogLine extends JDialog{
 
 			}
 		});
-		btnColor.setBackground(new Color(124,208,247));
-		btnColor.setForeground(Color.BLACK);
+		btnColor.setBackground(new Color(230, 230, 250));
+		btnColor.setForeground(Color.BLUE);
 		GridBagConstraints gbc_btnOutlineColor = new GridBagConstraints();
 		gbc_btnOutlineColor.insets = new Insets(0, 0, 0, 5);
 		gbc_btnOutlineColor.gridx = 2;

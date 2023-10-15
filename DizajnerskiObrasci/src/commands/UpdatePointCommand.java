@@ -28,5 +28,9 @@ public class UpdatePointCommand implements Command{
 		point.setPropertiesFrom(oldState);
 		
 	}
+	@Override
+	public String toString() {
+		return "Modified->" + point.toString();
+	}
 
 }

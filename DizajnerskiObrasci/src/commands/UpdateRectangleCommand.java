@@ -23,4 +23,8 @@ public class UpdateRectangleCommand implements Command{
 	    public void unexecute() {
 	        rectangle.setPropertiesFrom(oldRectangle);
 	    }
+	    @Override
+		public String toString() {
+			return "Modified->" + rectangle.toString();
+		}
 }

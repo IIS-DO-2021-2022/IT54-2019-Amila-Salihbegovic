@@ -21,6 +21,7 @@ import javax.swing.border.EmptyBorder;
 
 import geometricShapes.Point;
 import geometricShapes.Circle;
+import java.awt.SystemColor;
 
 public class DialogCircle extends JDialog implements DialogShape{
 	private final JPanel contentPanel = new JPanel();
@@ -57,7 +58,7 @@ public class DialogCircle extends JDialog implements DialogShape{
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setForeground(new Color(124, 208, 247));
-		contentPanel.setBackground(Color.BLACK);
+		contentPanel.setBackground(new Color(230, 230, 250));
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
@@ -68,7 +69,7 @@ public class DialogCircle extends JDialog implements DialogShape{
 		contentPanel.setLayout(gbl_contentPanel);
 		{
 			JLabel lblX = new JLabel("Insert coordinate X (center point):");
-			lblX.setForeground(new Color(124, 208, 247));
+			lblX.setForeground(Color.BLUE);
 			GridBagConstraints gbc_lblX = new GridBagConstraints();
 			gbc_lblX.anchor = GridBagConstraints.EAST;
 			gbc_lblX.insets = new Insets(0, 0, 5, 5);
@@ -88,7 +89,7 @@ public class DialogCircle extends JDialog implements DialogShape{
 		}
 		{
 			JLabel lblY = new JLabel("Insert coordinate Y (center point):");
-			lblY.setForeground(new Color(124, 208, 247));
+			lblY.setForeground(Color.BLUE);
 			GridBagConstraints gbc_lblY = new GridBagConstraints();
 			gbc_lblY.anchor = GridBagConstraints.EAST;
 			gbc_lblY.insets = new Insets(0, 0, 5, 5);
@@ -108,7 +109,7 @@ public class DialogCircle extends JDialog implements DialogShape{
 		}
 		{
 			JLabel lblRadius = new JLabel("Insert radius:");
-			lblRadius.setForeground(new Color(124, 208, 247));
+			lblRadius.setForeground(Color.BLUE);
 			GridBagConstraints gbc_lblRadius = new GridBagConstraints();
 			gbc_lblRadius.anchor = GridBagConstraints.EAST;
 			gbc_lblRadius.insets = new Insets(0, 0, 0, 5);
@@ -136,8 +137,8 @@ public class DialogCircle extends JDialog implements DialogShape{
 			}
 		});
 
-		btnInnerColor.setBackground(new Color(124,208,247));
-		btnInnerColor.setForeground(Color.BLACK);
+		btnInnerColor.setBackground(new Color(230, 230, 250));
+		btnInnerColor.setForeground(Color.BLUE);
 		GridBagConstraints gbc_btnInnerColor = new GridBagConstraints();
 		gbc_btnInnerColor.anchor = GridBagConstraints.SOUTH;
 		gbc_btnInnerColor.insets = new Insets(0, 0, 5, 5);
@@ -156,8 +157,8 @@ public class DialogCircle extends JDialog implements DialogShape{
 			}
 		});
 
-		btnOutlineColor.setBackground(new Color(124,208,247));
-		btnOutlineColor.setForeground(Color.BLACK);
+		btnOutlineColor.setBackground(new Color(230, 230, 250));
+		btnOutlineColor.setForeground(Color.BLUE);
 		GridBagConstraints gbc_btnOutlineColor = new GridBagConstraints();
 		gbc_btnOutlineColor.insets = new Insets(0, 0, 0, 5);
 		gbc_btnOutlineColor.gridx = 3;

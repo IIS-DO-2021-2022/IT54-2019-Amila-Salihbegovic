@@ -85,7 +85,9 @@ public class DrawingController {
 	private void showMessage(String message) {
 		JOptionPane.showMessageDialog(null, message, "Message", JOptionPane.INFORMATION_MESSAGE);
 	}
-
+	private int showConfirmationDialog(String message) {
+		return JOptionPane.showConfirmDialog(null, message, "Warning message", JOptionPane.YES_NO_OPTION);
+	}
 	public void modify() {
 		Shape selectedShape = model.getSelectedShapes().get(0);
 		if (selectedShape != null) {
@@ -378,7 +380,7 @@ public class DrawingController {
 			return;
 		}
 
-		int selectedOption = showDeleteConfirmationDialog();
+		int selectedOption = showConfirmationDialog("Are you sure you want to delete?");
 
 		if (selectedOption == JOptionPane.YES_OPTION) {
 			while (!selectedShapes.isEmpty()) {
@@ -398,11 +400,6 @@ public class DrawingController {
 		frame.getTglbtnSelect().setSelected(false);
 	}
 
-	private int showDeleteConfirmationDialog() {
-		return JOptionPane.showConfirmDialog(null, "Are you sure you want to delete?", "Warning message",
-				JOptionPane.YES_NO_OPTION);
-	}
-
 	public void redo() {
 		if (actions.isEmpty()) {
 			frame.getBtnRedo().setEnabled(false);
@@ -412,7 +409,7 @@ public class DrawingController {
 			Command redo = undoactions.pop();
 			redo.execute();
 			actions.push(redo);
-			frame.getTextArea().append("Redo-> " + "\n");
+			frame.getTextArea().append("Redo-> " + redo.toString().trim() + "\n");
 			frame.getBtnUndo().setEnabled(true);
 
 			frame.getBtnRedo().setEnabled(!undoactions.isEmpty());
@@ -420,7 +417,7 @@ public class DrawingController {
 			System.out.print("Redo stack:" + undoactions);
 			if (undoactions.isEmpty()) {
 				frame.getBtnRedo().setEnabled(false);
-				JOptionPane.showMessageDialog(null, "There is nothing left to redo");
+				showMessage("There is nothing left to redo");
 
 			}
 		}
@@ -435,7 +432,7 @@ public class DrawingController {
 			Command undo = actions.pop();
 			undo.unexecute();
 			undoactions.push(undo);
-			frame.getTextArea().append("Undo-> " + "\n");
+			frame.getTextArea().append("Undo-> "+undo.toString().trim() + "\n");
 			frame.getBtnRedo().setEnabled(!undoactions.isEmpty());
 			frame.getBtnUndo().setEnabled(!actions.isEmpty());
 			frame.getView().repaint();
@@ -456,7 +453,7 @@ public class DrawingController {
 
 			if (index == model.getShapes().size() - 1) {
 
-				JOptionPane.showMessageDialog(null, "Element is alrady in front!");
+				showMessage("Element is alrady in front!");
 
 			} else {
 
@@ -480,7 +477,7 @@ public class DrawingController {
 
 			if (index == 0) {
 
-				JOptionPane.showMessageDialog(null, "Element is alrady in back!");
+				showMessage("Element is alrady in back!");
 
 			} else {
 
@@ -505,7 +502,7 @@ public class DrawingController {
 
 			if (index == model.getShapes().size() - 1) {
 
-				JOptionPane.showMessageDialog(null, "Element is alrady in front!");
+				showMessage("Element is alrady in front!");
 
 			} else {
 
@@ -530,7 +527,7 @@ public class DrawingController {
 
 			if (index == 0) {
 
-				JOptionPane.showMessageDialog(null, "Element is alrady in back!");
+				showMessage("Element is alrady in back!");
 
 			} else {
 
@@ -549,11 +546,10 @@ public class DrawingController {
 
 	public void saveCommands() {
 		if (model.getShapes().size() == 0) {
-			JOptionPane.showMessageDialog(null, "Draw something!", "Error", JOptionPane.ERROR_MESSAGE);
+			showError("Draw something!");
 			return;
 		}
 		
-		String command = "";
 		FileManager file = new FileManager(new FileCommand(frame));
 		JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 		fileChooser.setDialogTitle("Save comands");
@@ -650,10 +646,10 @@ public class DrawingController {
 	            handleDeselectedCommand(nextLine);
 	            break;
 	        case "Undo->":
-	            undo();
+	            loadUndo();
 	            break;
 	        case "Redo->":
-	            redo();
+	            loadRedo();
 	            break;
 	        case "Bring_to_back->":
 	            BringToBack();
@@ -670,6 +666,39 @@ public class DrawingController {
 	        default:
 	            break;
 	    }
+	}
+	private void loadUndo() {
+		if (undoactions.isEmpty()) {
+			frame.getBtnUndo().setEnabled(false);
+		}
+		if (!actions.isEmpty()) {
+			Command undo = actions.pop();
+			undo.unexecute();
+			undoactions.push(undo);
+			frame.getTextArea().append("Undo-> "+undo.toString().trim() + "\n");
+			frame.getBtnRedo().setEnabled(!undoactions.isEmpty());
+			frame.getBtnUndo().setEnabled(!actions.isEmpty());
+			frame.getView().repaint();
+		}
+		model.getSelectedShapes().get(0).setSelected(true);
+	}
+	private void loadRedo() {
+		if (actions.isEmpty()) {
+			frame.getBtnRedo().setEnabled(false);
+		}
+		if (!undoactions.isEmpty()) {
+
+			Command redo = undoactions.pop();
+			redo.execute();
+			actions.push(redo);
+			frame.getTextArea().append("Redo-> "+ redo.toString().trim() + "\n");
+			frame.getBtnUndo().setEnabled(true);
+
+			frame.getBtnRedo().setEnabled(!undoactions.isEmpty());
+			frame.getView().repaint();
+			System.out.print("Redo stack:" + undoactions);
+		}
+		model.getSelectedShapes().get(0).setSelected(true);
 	}
 	private void handleDeselectedCommand(String nextLine) {
 	    Shape shape = returnShape(nextLine);
@@ -861,11 +890,10 @@ private void handleAddCommand(String nextLine) {
 
 	public void saveDrawing() {
 		if (model.getShapes().size() == 0) {
-			JOptionPane.showMessageDialog(null, "Draw something!", "Error", JOptionPane.ERROR_MESSAGE);
+			showError("Draw something!");
 			return;
 		}
 		
-		String command = "";
 		FileManager file = new FileManager(new FileDraw(model));
 		JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 		fileChooser.setDialogTitle("Save drawing");

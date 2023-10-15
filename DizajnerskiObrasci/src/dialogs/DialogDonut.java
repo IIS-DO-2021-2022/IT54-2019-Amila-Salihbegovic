@@ -56,8 +56,9 @@ public class DialogDonut extends JDialog implements DialogShape{
 		setLocationRelativeTo(null);
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setForeground(Color.BLUE);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPanel.setBackground(Color.BLACK);
+		contentPanel.setBackground(new Color(230, 230, 250));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
 		gbl_contentPanel.columnWidths = new int[]{0, 0, 0};
@@ -67,7 +68,7 @@ public class DialogDonut extends JDialog implements DialogShape{
 		contentPanel.setLayout(gbl_contentPanel);
 		{
 			JLabel lblX = new JLabel("Insert coordinate X (center point):");
-			lblX.setForeground(new Color(124,208,247));
+			lblX.setForeground(Color.BLUE);
 			GridBagConstraints gbc_lblX = new GridBagConstraints();
 			gbc_lblX.anchor = GridBagConstraints.EAST;
 			gbc_lblX.insets = new Insets(0, 0, 5, 5);
@@ -87,7 +88,7 @@ public class DialogDonut extends JDialog implements DialogShape{
 		}
 		{
 			JLabel lblY = new JLabel("Insert coordinate Y (center point):");
-			lblY.setForeground(new Color(124,208,247));
+			lblY.setForeground(Color.BLUE);
 			GridBagConstraints gbc_lblY = new GridBagConstraints();
 			gbc_lblY.insets = new Insets(0, 0, 5, 5);
 			gbc_lblY.gridx = 0;
@@ -106,7 +107,7 @@ public class DialogDonut extends JDialog implements DialogShape{
 		}
 		{
 			JLabel lblRadius = new JLabel("Insert radius:");
-			lblRadius.setForeground(new Color(124,208,247));
+			lblRadius.setForeground(Color.BLUE);
 			GridBagConstraints gbc_lblRadius = new GridBagConstraints();
 			gbc_lblRadius.anchor = GridBagConstraints.EAST;
 			gbc_lblRadius.insets = new Insets(0, 0, 5, 5);
@@ -126,7 +127,7 @@ public class DialogDonut extends JDialog implements DialogShape{
 		}
 		{
 			JLabel lblInnerRadius = new JLabel("Insert inner radius:");
-			lblInnerRadius.setForeground(new Color(124,208,247));
+			lblInnerRadius.setForeground(Color.BLUE);
 			GridBagConstraints gbc_lblInnerRadius = new GridBagConstraints();
 			gbc_lblInnerRadius.anchor = GridBagConstraints.EAST;
 			gbc_lblInnerRadius.insets = new Insets(0, 0, 5, 5);
@@ -153,8 +154,8 @@ public class DialogDonut extends JDialog implements DialogShape{
 
 			}
 		});
-		btnInnerColor.setBackground(new Color(124,208,247));
-		btnInnerColor.setForeground(Color.BLACK);
+		btnInnerColor.setBackground(new Color(230, 230, 250));
+		btnInnerColor.setForeground(Color.BLUE);
 		GridBagConstraints gbc_btnInnerColor = new GridBagConstraints();
 		gbc_btnInnerColor.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnInnerColor.insets = new Insets(0, 0, 5, 5);
@@ -171,8 +172,8 @@ public class DialogDonut extends JDialog implements DialogShape{
 
 			}
 		});
-		btnOuterColor.setBackground(new Color(124,208,247));
-		btnOuterColor.setForeground(Color.BLACK);
+		btnOuterColor.setBackground(new Color(230, 230, 250));
+		btnOuterColor.setForeground(Color.BLUE);
 		GridBagConstraints gbc_btnOuterColor = new GridBagConstraints();
 		gbc_btnOuterColor.insets = new Insets(0, 0, 5, 5);
 		gbc_btnOuterColor.gridx = 2;

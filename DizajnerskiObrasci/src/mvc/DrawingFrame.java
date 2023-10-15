@@ -143,7 +143,7 @@ public class DrawingFrame extends JFrame {
 		tglbtnInnerColor.setMaximumSize(new Dimension(140, 21));
 		mnNewMenu_1.add(tglbtnInnerColor);
 		tglbtnInnerColor.setForeground(Color.BLUE);
-		tglbtnInnerColor.setBackground(SystemColor.menu);
+		tglbtnInnerColor.setBackground(Color.BLACK);
 
 		tglbtnInnerColor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -155,7 +155,7 @@ public class DrawingFrame extends JFrame {
 		tglbtnInnerColor.setEnabled(true);
 		mnNewMenu_1.add(tglbtnNOuterColor);
 		tglbtnNOuterColor.setForeground(Color.BLUE);
-		tglbtnNOuterColor.setBackground(SystemColor.menu);
+		tglbtnNOuterColor.setBackground(Color.BLACK);
 
 		tglbtnNOuterColor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

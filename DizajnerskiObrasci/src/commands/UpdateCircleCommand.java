@@ -23,4 +23,8 @@ public class UpdateCircleCommand implements Command {
     public void unexecute() {
         circle.setPropertiesFrom(oldCircle);
     }
+    @Override
+	public String toString() {
+		return "Modified->" + circle.toString();
+	}
 }
