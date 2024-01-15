@@ -153,7 +153,7 @@ public class DrawingController {
 
 	}
 
-	private void ModifyHexagon(Shape selectedShape2) {
+	private void ModifyHexagon(Shape selectedShape) {
 		Command command;
 		HexagonAdapter hex = (HexagonAdapter) selectedShape;
 		DialogHexagon dlghexagon = new DialogHexagon();
@@ -195,7 +195,7 @@ public class DrawingController {
 		}
 	}
 
-	private void ModifyRectangle(Shape selectedShape2) {
+	private void ModifyRectangle(Shape selectedShape) {
 		Command command;
 		Rectangle rect = (Rectangle) selectedShape;
 		DialogRectangle dlgrectangle = new DialogRectangle();
@@ -239,7 +239,7 @@ public class DrawingController {
 		}
 	}
 
-	private void ModifyLine(Shape selectedShape2) {
+	private void ModifyLine(Shape selectedShape) {
 		Command command;
 		Line line = (Line) selectedShape;
 		DialogLine dlgline = new DialogLine();
@@ -284,7 +284,7 @@ public class DrawingController {
 
 	}
 
-	private void ModifyCircle(Shape selectedShape2) {
+	private void ModifyCircle(Shape selectedShape) {
 		Command command;
 		Circle circle = (Circle) selectedShape;
 		DialogCircle dglcircle = new DialogCircle();
@@ -326,7 +326,7 @@ public class DrawingController {
 
 	}
 
-	private void ModifyDonut(Shape selectedShape2) {
+	private void ModifyDonut(Shape selectedShape) {
 		Command command;
 		Donut donut = (Donut) selectedShape;
 		DialogDonut dgldonut = new DialogDonut();
