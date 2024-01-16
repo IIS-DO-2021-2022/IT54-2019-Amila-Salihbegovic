@@ -724,17 +724,17 @@ public class DrawingController {
 	}
 	private void handleSelectedCommand(String nextLine) {
 	    Shape shape = returnShape(nextLine);
-
+	    System.out.println(shape);
 	    model.getShapes().stream()
 	        .filter(s -> s.getClass() == shape.getClass()) 
-	        .filter(s -> {
-	            if (s instanceof HexagonAdapter && shape instanceof HexagonAdapter) {
-	                HexagonAdapter hexagon1 = (HexagonAdapter) s;
-	                HexagonAdapter hexagon = (HexagonAdapter) shape;
-	                return hexagon1.getNewHexagon().equals(hexagon.getNewHexagon());
-	            }
-	            return s.equals(shape);
-	        })
+//	        .filter(s -> {
+//	            if (s instanceof HexagonAdapter && shape instanceof HexagonAdapter) {
+//	                HexagonAdapter hexagon1 = (HexagonAdapter) s;
+//	                HexagonAdapter hexagon = (HexagonAdapter) shape;
+//	                return hexagon1.getNewHexagon().equals(hexagon.getNewHexagon());
+//	            }
+//	            return s.equals(shape);
+//	        })
 	        .findFirst()
 	        .ifPresent(selectedShape -> {
 	            selectedShape.setSelected(true);
